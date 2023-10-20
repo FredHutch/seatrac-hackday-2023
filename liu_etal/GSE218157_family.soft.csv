@@ -1,0 +1,145 @@
+,title,geo_accession,source_name,organism,taxid,tissue,animal_id,pitt_id,vax_group,vax_dose,dose_group,time_after_bcg,total_mtb_cfu,log_mtb_cfu,grans_nx,protect_outcome,description
+0,0NR IV pre,GSM6735570,Whole Blood,Macaca mulatta,9544,Whole Blood,0NR,13417,IV,3.70E+07,high,pre,30.0,1.491,1,protected,0NR_65
+1,0NR IV d2,GSM6735571,Whole Blood,Macaca mulatta,9544,Whole Blood,0NR,13417,IV,3.70E+07,high,d2,30.0,1.491,1,protected,0NR_66
+2,0NR IV wk2,GSM6735572,Whole Blood,Macaca mulatta,9544,Whole Blood,0NR,13417,IV,3.70E+07,high,wk2,30.0,1.491,1,protected,0NR_67
+3,0NR IV wk12,GSM6735573,Whole Blood,Macaca mulatta,9544,Whole Blood,0NR,13417,IV,3.70E+07,high,wk12,30.0,1.491,1,protected,0NR_68
+4,0TL HD-ID pre,GSM6735574,Whole Blood,Macaca mulatta,9544,Whole Blood,0TL,18117,HD-ID,2.90E+07,high,pre,2120.0,3.327,6,not_protected,0TL_113
+5,0TL HD-ID d2,GSM6735575,Whole Blood,Macaca mulatta,9544,Whole Blood,0TL,18117,HD-ID,2.90E+07,high,d2,2120.0,3.327,6,not_protected,0TL_114
+6,0TL HD-ID wk2,GSM6735576,Whole Blood,Macaca mulatta,9544,Whole Blood,0TL,18117,HD-ID,2.90E+07,high,wk2,2120.0,3.327,6,not_protected,0TL_115
+7,0TL HD-ID wk12,GSM6735577,Whole Blood,Macaca mulatta,9544,Whole Blood,0TL,18117,HD-ID,2.90E+07,high,wk12,2120.0,3.327,6,not_protected,0TL_116
+8,CZRJR AE pre,GSM6735578,Whole Blood,Macaca mulatta,9544,Whole Blood,CZRJR,13117,AE,3.70E+07,high,pre,765932.0,5.884,26,not_protected,CZRJR_57
+9,CZRJR AE d2,GSM6735579,Whole Blood,Macaca mulatta,9544,Whole Blood,CZRJR,13117,AE,3.70E+07,high,d2,765932.0,5.884,26,not_protected,CZRJR_58
+10,CZRJR AE wk2,GSM6735580,Whole Blood,Macaca mulatta,9544,Whole Blood,CZRJR,13117,AE,3.70E+07,high,wk2,765932.0,5.884,26,not_protected,CZRJR_59
+11,CZRJR AE wk12,GSM6735581,Whole Blood,Macaca mulatta,9544,Whole Blood,CZRJR,13117,AE,3.70E+07,high,wk12,765932.0,5.884,26,not_protected,CZRJR_60
+12,DF2A IV pre,GSM6735582,Whole Blood,Macaca mulatta,9544,Whole Blood,DF2A,36216,IV,5.20E+07,high,pre,0.0,0.0,0,protected,DF2A_13
+13,DF2A IV d2,GSM6735583,Whole Blood,Macaca mulatta,9544,Whole Blood,DF2A,36216,IV,5.20E+07,high,d2,0.0,0.0,0,protected,DF2A_14
+14,DF2A IV wk2,GSM6735584,Whole Blood,Macaca mulatta,9544,Whole Blood,DF2A,36216,IV,5.20E+07,high,wk2,0.0,0.0,0,protected,DF2A_15
+15,DF2A IV wk12,GSM6735585,Whole Blood,Macaca mulatta,9544,Whole Blood,DF2A,36216,IV,5.20E+07,high,wk12,0.0,0.0,0,protected,DF2A_16
+16,DF7X ID pre,GSM6735586,Whole Blood,Macaca mulatta,9544,Whole Blood,DF7X,12617,ID,3.10E+05,low,pre,860350.0,5.935,60,not_protected,DF7X_53
+17,DF7X ID d2,GSM6735587,Whole Blood,Macaca mulatta,9544,Whole Blood,DF7X,12617,ID,3.10E+05,low,d2,860350.0,5.935,60,not_protected,DF7X_54
+18,DF7X ID wk2,GSM6735588,Whole Blood,Macaca mulatta,9544,Whole Blood,DF7X,12617,ID,3.10E+05,low,wk2,860350.0,5.935,60,not_protected,DF7X_55
+19,DF7X ID wk12,GSM6735589,Whole Blood,Macaca mulatta,9544,Whole Blood,DF7X,12617,ID,3.10E+05,low,wk12,860350.0,5.935,60,not_protected,DF7X_56
+20,DF8J HD-ID pre,GSM6735590,Whole Blood,Macaca mulatta,9544,Whole Blood,DF8J,13717,HD-ID,2.90E+07,high,pre,39765.0,4.6,6,not_protected,DF8J_109
+21,DF8J HD-ID d2,GSM6735591,Whole Blood,Macaca mulatta,9544,Whole Blood,DF8J,13717,HD-ID,2.90E+07,high,d2,39765.0,4.6,6,not_protected,DF8J_110
+22,DF8J HD-ID wk2,GSM6735592,Whole Blood,Macaca mulatta,9544,Whole Blood,DF8J,13717,HD-ID,2.90E+07,high,wk2,39765.0,4.6,6,not_protected,DF8J_111
+23,DF8J HD-ID wk12,GSM6735593,Whole Blood,Macaca mulatta,9544,Whole Blood,DF8J,13717,HD-ID,2.90E+07,high,wk12,39765.0,4.6,6,not_protected,DF8J_112
+24,DF9F HD-ID pre,GSM6735594,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9F,18817,HD-ID,2.90E+07,high,pre,42860.0,4.632,23,not_protected,DF9F_141
+25,DF9F HD-ID d2,GSM6735595,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9F,18817,HD-ID,2.90E+07,high,d2,42860.0,4.632,23,not_protected,DF9F_142
+26,DF9F HD-ID wk2,GSM6735596,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9F,18817,HD-ID,2.90E+07,high,wk2,42860.0,4.632,23,not_protected,DF9F_143
+27,DF9F HD-ID wk12,GSM6735597,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9F,18817,HD-ID,2.90E+07,high,wk12,42860.0,4.632,23,not_protected,DF9F_144
+28,DF9I ID pre,GSM6735598,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9I,18917,ID,3.10E+05,low,pre,700608.0,5.845,16,not_protected,DF9I_117
+29,DF9I ID d2,GSM6735599,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9I,18917,ID,3.10E+05,low,d2,700608.0,5.845,16,not_protected,DF9I_118
+30,DF9I ID wk2,GSM6735600,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9I,18917,ID,3.10E+05,low,wk2,700608.0,5.845,16,not_protected,DF9I_119
+31,DF9I ID wk12,GSM6735601,Whole Blood,Macaca mulatta,9544,Whole Blood,DF9I,18917,ID,3.10E+05,low,wk12,700608.0,5.845,16,not_protected,DF9I_120
+32,DFB3 AE pre,GSM6735602,Whole Blood,Macaca mulatta,9544,Whole Blood,DFB3,12417,AE,3.70E+07,high,pre,71910.0,4.857,20,not_protected,DFB3_97
+33,DFB3 AE d2,GSM6735603,Whole Blood,Macaca mulatta,9544,Whole Blood,DFB3,12417,AE,3.70E+07,high,d2,71910.0,4.857,20,not_protected,DFB3_98
+34,DFB3 AE wk2,GSM6735604,Whole Blood,Macaca mulatta,9544,Whole Blood,DFB3,12417,AE,3.70E+07,high,wk2,71910.0,4.857,20,not_protected,DFB3_99
+35,DFB3 AE wk12,GSM6735605,Whole Blood,Macaca mulatta,9544,Whole Blood,DFB3,12417,AE,3.70E+07,high,wk12,71910.0,4.857,20,not_protected,DFB3_100
+36,DFG1 IV pre,GSM6735606,Whole Blood,Macaca mulatta,9544,Whole Blood,DFG1,18217,IV,3.70E+07,high,pre,1549460.0,6.19,8,not_protected,DFG1_133
+37,DFG1 IV d2,GSM6735607,Whole Blood,Macaca mulatta,9544,Whole Blood,DFG1,18217,IV,3.70E+07,high,d2,1549460.0,6.19,8,not_protected,DFG1_134
+38,DFG1 IV wk2,GSM6735608,Whole Blood,Macaca mulatta,9544,Whole Blood,DFG1,18217,IV,3.70E+07,high,wk2,1549460.0,6.19,8,not_protected,DFG1_135
+39,DFG1 IV wk12,GSM6735609,Whole Blood,Macaca mulatta,9544,Whole Blood,DFG1,18217,IV,3.70E+07,high,wk12,1549460.0,6.19,8,not_protected,DFG1_136
+40,DFI0 AE pre,GSM6735610,Whole Blood,Macaca mulatta,9544,Whole Blood,DFI0,35316,AE,5.20E+07,high,pre,61549.0,4.789,60,not_protected,DFI0_21
+41,DFI0 AE d2,GSM6735611,Whole Blood,Macaca mulatta,9544,Whole Blood,DFI0,35316,AE,5.20E+07,high,d2,61549.0,4.789,60,not_protected,DFI0_22
+42,DFI0 AE wk2,GSM6735612,Whole Blood,Macaca mulatta,9544,Whole Blood,DFI0,35316,AE,5.20E+07,high,wk2,61549.0,4.789,60,not_protected,DFI0_23
+43,DFI0 AE wk12,GSM6735613,Whole Blood,Macaca mulatta,9544,Whole Blood,DFI0,35316,AE,5.20E+07,high,wk12,61549.0,4.789,60,not_protected,DFI0_24
+44,DFJ3 AE pre,GSM6735614,Whole Blood,Macaca mulatta,9544,Whole Blood,DFJ3,18617,AE,3.70E+07,high,pre,74120.0,4.87,10,not_protected,DFJ3_121
+45,DFJ3 AE d2,GSM6735615,Whole Blood,Macaca mulatta,9544,Whole Blood,DFJ3,18617,AE,3.70E+07,high,d2,74120.0,4.87,10,not_protected,DFJ3_122
+46,DFJ3 AE wk2,GSM6735616,Whole Blood,Macaca mulatta,9544,Whole Blood,DFJ3,18617,AE,3.70E+07,high,wk2,74120.0,4.87,10,not_protected,DFJ3_123
+47,DFJ3 AE wk12,GSM6735617,Whole Blood,Macaca mulatta,9544,Whole Blood,DFJ3,18617,AE,3.70E+07,high,wk12,74120.0,4.87,10,not_protected,DFJ3_124
+48,DFL6 ID/AE pre,GSM6735618,Whole Blood,Macaca mulatta,9544,Whole Blood,DFL6,18417,ID/AE,3.7E+07 / 3.1E+05,high,pre,3057750.0,6.485,60,not_protected,DFL6_129
+49,DFL6 ID/AE d2,GSM6735619,Whole Blood,Macaca mulatta,9544,Whole Blood,DFL6,18417,ID/AE,3.7E+07 / 3.1E+05,high,d2,3057750.0,6.485,60,not_protected,DFL6_130
+50,DFL6 ID/AE wk2,GSM6735620,Whole Blood,Macaca mulatta,9544,Whole Blood,DFL6,18417,ID/AE,3.7E+07 / 3.1E+05,high,wk2,3057750.0,6.485,60,not_protected,DFL6_131
+51,DFL6 ID/AE wk12,GSM6735621,Whole Blood,Macaca mulatta,9544,Whole Blood,DFL6,18417,ID/AE,3.7E+07 / 3.1E+05,high,wk12,3057750.0,6.485,60,not_protected,DFL6_132
+52,DFTA IV pre,GSM6735622,Whole Blood,Macaca mulatta,9544,Whole Blood,DFTA,13617,IV,3.70E+07,high,pre,0.0,0.0,0,protected,DFTA_85
+53,DFTA IV d2,GSM6735623,Whole Blood,Macaca mulatta,9544,Whole Blood,DFTA,13617,IV,3.70E+07,high,d2,0.0,0.0,0,protected,DFTA_86
+54,DFTA IV wk2,GSM6735624,Whole Blood,Macaca mulatta,9544,Whole Blood,DFTA,13617,IV,3.70E+07,high,wk2,0.0,0.0,0,protected,DFTA_87
+55,DFTA IV wk12,GSM6735625,Whole Blood,Macaca mulatta,9544,Whole Blood,DFTA,13617,IV,3.70E+07,high,wk12,0.0,0.0,0,protected,DFTA_88
+56,DFVJ ID pre,GSM6735626,Whole Blood,Macaca mulatta,9544,Whole Blood,DFVJ,35616,ID,3.50E+05,low,pre,19330.0,4.286,22,not_protected,DFVJ_1
+57,DFVJ ID d2,GSM6735627,Whole Blood,Macaca mulatta,9544,Whole Blood,DFVJ,35616,ID,3.50E+05,low,d2,19330.0,4.286,22,not_protected,DFVJ_2
+58,DFVJ ID wk2,GSM6735628,Whole Blood,Macaca mulatta,9544,Whole Blood,DFVJ,35616,ID,3.50E+05,low,wk2,19330.0,4.286,22,not_protected,DFVJ_3
+59,DFVJ ID wk12,GSM6735629,Whole Blood,Macaca mulatta,9544,Whole Blood,DFVJ,35616,ID,3.50E+05,low,wk12,19330.0,4.286,22,not_protected,DFVJ_4
+60,DFWG ID/AE pre,GSM6735630,Whole Blood,Macaca mulatta,9544,Whole Blood,DFWG,13817,ID/AE,3.7E+07 / 3.1E+05,high,pre,1123268.0,6.05,60,not_protected,DFWG_101
+61,DFWG ID/AE d2,GSM6735631,Whole Blood,Macaca mulatta,9544,Whole Blood,DFWG,13817,ID/AE,3.7E+07 / 3.1E+05,high,d2,1123268.0,6.05,60,not_protected,DFWG_102
+62,DFWG ID/AE wk2,GSM6735632,Whole Blood,Macaca mulatta,9544,Whole Blood,DFWG,13817,ID/AE,3.7E+07 / 3.1E+05,high,wk2,1123268.0,6.05,60,not_protected,DFWG_103
+63,DFWG ID/AE wk12,GSM6735633,Whole Blood,Macaca mulatta,9544,Whole Blood,DFWG,13817,ID/AE,3.7E+07 / 3.1E+05,high,wk12,1123268.0,6.05,60,not_protected,DFWG_104
+64,DFX6 AE pre,GSM6735634,Whole Blood,Macaca mulatta,9544,Whole Blood,DFX6,35016,AE,5.20E+07,high,pre,697082.0,5.843,17,not_protected,DFX6_5
+65,DFX6 AE d2,GSM6735635,Whole Blood,Macaca mulatta,9544,Whole Blood,DFX6,35016,AE,5.20E+07,high,d2,697082.0,5.843,17,not_protected,DFX6_6
+66,DFX6 AE wk2,GSM6735636,Whole Blood,Macaca mulatta,9544,Whole Blood,DFX6,35016,AE,5.20E+07,high,wk2,697082.0,5.843,17,not_protected,DFX6_7
+67,DFX6 AE wk12,GSM6735637,Whole Blood,Macaca mulatta,9544,Whole Blood,DFX6,35016,AE,5.20E+07,high,wk12,697082.0,5.843,17,not_protected,DFX6_8
+68,DFXH ID/AE pre,GSM6735638,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXH,36916,ID/AE,5.2E+07 / 3.5E+05,high,pre,86330.0,4.936,19,not_protected,DFXH_25
+69,DFXH ID/AE d2,GSM6735639,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXH,36916,ID/AE,5.2E+07 / 3.5E+05,high,d2,86330.0,4.936,19,not_protected,DFXH_26
+70,DFXH ID/AE wk2,GSM6735640,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXH,36916,ID/AE,5.2E+07 / 3.5E+05,high,wk2,86330.0,4.936,19,not_protected,DFXH_27
+71,DFXH ID/AE wk12,GSM6735641,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXH,36916,ID/AE,5.2E+07 / 3.5E+05,high,wk12,86330.0,4.936,19,not_protected,DFXH_28
+72,DFXL ID pre,GSM6735642,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXL,35916,ID,3.50E+05,low,pre,37530.0,4.574,22,not_protected,DFXL_17
+73,DFXL ID d2,GSM6735643,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXL,35916,ID,3.50E+05,low,d2,37530.0,4.574,22,not_protected,DFXL_18
+74,DFXL ID wk2,GSM6735644,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXL,35916,ID,3.50E+05,low,wk2,37530.0,4.574,22,not_protected,DFXL_19
+75,DFXL ID wk12,GSM6735645,Whole Blood,Macaca mulatta,9544,Whole Blood,DFXL,35916,ID,3.50E+05,low,wk12,37530.0,4.574,22,not_protected,DFXL_20
+76,DFZ4 ID pre,GSM6735646,Whole Blood,Macaca mulatta,9544,Whole Blood,DFZ4,12717,ID,3.10E+05,low,pre,116495.0,5.066,22,not_protected,DFZ4_93
+77,DFZ4 ID d2,GSM6735647,Whole Blood,Macaca mulatta,9544,Whole Blood,DFZ4,12717,ID,3.10E+05,low,d2,116495.0,5.066,22,not_protected,DFZ4_94
+78,DFZ4 ID wk2,GSM6735648,Whole Blood,Macaca mulatta,9544,Whole Blood,DFZ4,12717,ID,3.10E+05,low,wk2,116495.0,5.066,22,not_protected,DFZ4_95
+79,DFZ4 ID wk12,GSM6735649,Whole Blood,Macaca mulatta,9544,Whole Blood,DFZ4,12717,ID,3.10E+05,low,wk12,116495.0,5.066,22,not_protected,DFZ4_96
+80,DG02 HD-ID pre,GSM6735650,Whole Blood,Macaca mulatta,9544,Whole Blood,DG02,18517,HD-ID,2.90E+07,high,pre,60880.0,4.784,20,not_protected,DG02_125
+81,DG02 HD-ID d2,GSM6735651,Whole Blood,Macaca mulatta,9544,Whole Blood,DG02,18517,HD-ID,2.90E+07,high,d2,60880.0,4.784,20,not_protected,DG02_126
+82,DG02 HD-ID wk2,GSM6735652,Whole Blood,Macaca mulatta,9544,Whole Blood,DG02,18517,HD-ID,2.90E+07,high,wk2,60880.0,4.784,20,not_protected,DG02_127
+83,DG02 HD-ID wk12,GSM6735653,Whole Blood,Macaca mulatta,9544,Whole Blood,DG02,18517,HD-ID,2.90E+07,high,wk12,60880.0,4.784,20,not_protected,DG02_128
+84,DG05 ID/AE pre,GSM6735654,Whole Blood,Macaca mulatta,9544,Whole Blood,DG05,36516,ID/AE,5.2E+07 / 3.5E+05,high,pre,310350.0,5.492,26,not_protected,DG05_9
+85,DG05 ID/AE d2,GSM6735655,Whole Blood,Macaca mulatta,9544,Whole Blood,DG05,36516,ID/AE,5.2E+07 / 3.5E+05,high,d2,310350.0,5.492,26,not_protected,DG05_10
+86,DG05 ID/AE wk2,GSM6735656,Whole Blood,Macaca mulatta,9544,Whole Blood,DG05,36516,ID/AE,5.2E+07 / 3.5E+05,high,wk2,310350.0,5.492,26,not_protected,DG05_11
+87,DG05 ID/AE wk12,GSM6735657,Whole Blood,Macaca mulatta,9544,Whole Blood,DG05,36516,ID/AE,5.2E+07 / 3.5E+05,high,wk12,310350.0,5.492,26,not_protected,DG05_12
+88,DG49 HD-ID pre,GSM6735658,Whole Blood,Macaca mulatta,9544,Whole Blood,DG49,18717,HD-ID,2.90E+07,high,pre,185198.0,5.268,10,not_protected,DG49_137
+89,DG49 HD-ID d2,GSM6735659,Whole Blood,Macaca mulatta,9544,Whole Blood,DG49,18717,HD-ID,2.90E+07,high,d2,185198.0,5.268,10,not_protected,DG49_138
+90,DG49 HD-ID wk2,GSM6735660,Whole Blood,Macaca mulatta,9544,Whole Blood,DG49,18717,HD-ID,2.90E+07,high,wk2,185198.0,5.268,10,not_protected,DG49_139
+91,DG49 HD-ID wk12,GSM6735661,Whole Blood,Macaca mulatta,9544,Whole Blood,DG49,18717,HD-ID,2.90E+07,high,wk12,185198.0,5.268,10,not_protected,DG49_140
+92,DG75 IV pre,GSM6735662,Whole Blood,Macaca mulatta,9544,Whole Blood,DG75,12517,IV,3.70E+07,high,pre,0.0,0.0,0,protected,DG75_105
+93,DG75 IV d2,GSM6735663,Whole Blood,Macaca mulatta,9544,Whole Blood,DG75,12517,IV,3.70E+07,high,d2,0.0,0.0,0,protected,DG75_106
+94,DG75 IV wk2,GSM6735664,Whole Blood,Macaca mulatta,9544,Whole Blood,DG75,12517,IV,3.70E+07,high,wk2,0.0,0.0,0,protected,DG75_107
+95,DG75 IV wk12,GSM6735665,Whole Blood,Macaca mulatta,9544,Whole Blood,DG75,12517,IV,3.70E+07,high,wk12,0.0,0.0,0,protected,DG75_108
+96,DG82 ID/AE pre,GSM6735666,Whole Blood,Macaca mulatta,9544,Whole Blood,DG82,13917,ID/AE,3.7E+07 / 3.1E+05,high,pre,11395.0,4.057,17,not_protected,DG82_81
+97,DG82 ID/AE d2,GSM6735667,Whole Blood,Macaca mulatta,9544,Whole Blood,DG82,13917,ID/AE,3.7E+07 / 3.1E+05,high,d2,11395.0,4.057,17,not_protected,DG82_82
+98,DG82 ID/AE wk2,GSM6735668,Whole Blood,Macaca mulatta,9544,Whole Blood,DG82,13917,ID/AE,3.7E+07 / 3.1E+05,high,wk2,11395.0,4.057,17,not_protected,DG82_83
+99,DG82 ID/AE wk12,GSM6735669,Whole Blood,Macaca mulatta,9544,Whole Blood,DG82,13917,ID/AE,3.7E+07 / 3.1E+05,high,wk12,11395.0,4.057,17,not_protected,DG82_84
+100,DJF9 IV pre,GSM6735670,Whole Blood,Macaca mulatta,9544,Whole Blood,DJF9,36316,IV,5.20E+07,high,pre,45.0,1.663,3,protected,DJF9_29
+101,DJF9 IV d2,GSM6735671,Whole Blood,Macaca mulatta,9544,Whole Blood,DJF9,36316,IV,5.20E+07,high,d2,45.0,1.663,3,protected,DJF9_30
+102,DJF9 IV wk2,GSM6735672,Whole Blood,Macaca mulatta,9544,Whole Blood,DJF9,36316,IV,5.20E+07,high,wk2,45.0,1.663,3,protected,DJF9_31
+103,DJF9 IV wk12,GSM6735673,Whole Blood,Macaca mulatta,9544,Whole Blood,DJF9,36316,IV,5.20E+07,high,wk12,45.0,1.663,3,protected,DJF9_32
+104,HBN ID/AE pre,GSM6735674,Whole Blood,Macaca mulatta,9544,Whole Blood,HBN,12817,ID/AE,3.7E+07 / 3.1E+05,high,pre,315270.0,5.499,36,not_protected,HBN_41
+105,HBN ID/AE d2,GSM6735675,Whole Blood,Macaca mulatta,9544,Whole Blood,HBN,12817,ID/AE,3.7E+07 / 3.1E+05,high,d2,315270.0,5.499,36,not_protected,HBN_42
+106,HBN ID/AE wk2,GSM6735676,Whole Blood,Macaca mulatta,9544,Whole Blood,HBN,12817,ID/AE,3.7E+07 / 3.1E+05,high,wk2,315270.0,5.499,36,not_protected,HBN_43
+107,HBN ID/AE wk12,GSM6735677,Whole Blood,Macaca mulatta,9544,Whole Blood,HBN,12817,ID/AE,3.7E+07 / 3.1E+05,high,wk12,315270.0,5.499,36,not_protected,HBN_44
+108,HCA AE pre,GSM6735678,Whole Blood,Macaca mulatta,9544,Whole Blood,HCA,14017,AE,3.70E+07,high,pre,187339.0,5.273,43,not_protected,HCA_77
+109,HCA AE d2,GSM6735679,Whole Blood,Macaca mulatta,9544,Whole Blood,HCA,14017,AE,3.70E+07,high,d2,187339.0,5.273,43,not_protected,HCA_78
+110,HCA AE wk2,GSM6735680,Whole Blood,Macaca mulatta,9544,Whole Blood,HCA,14017,AE,3.70E+07,high,wk2,187339.0,5.273,43,not_protected,HCA_79
+111,HCA AE wk12,GSM6735681,Whole Blood,Macaca mulatta,9544,Whole Blood,HCA,14017,AE,3.70E+07,high,wk12,187339.0,5.273,43,not_protected,HCA_80
+112,HCE HD-ID pre,GSM6735682,Whole Blood,Macaca mulatta,9544,Whole Blood,HCE,14317,HD-ID,2.90E+07,high,pre,29595.0,4.471,11,not_protected,HCE_49
+113,HCE HD-ID d2,GSM6735683,Whole Blood,Macaca mulatta,9544,Whole Blood,HCE,14317,HD-ID,2.90E+07,high,d2,29595.0,4.471,11,not_protected,HCE_50
+114,HCE HD-ID wk2,GSM6735684,Whole Blood,Macaca mulatta,9544,Whole Blood,HCE,14317,HD-ID,2.90E+07,high,wk2,29595.0,4.471,11,not_protected,HCE_51
+115,HCE HD-ID wk12,GSM6735685,Whole Blood,Macaca mulatta,9544,Whole Blood,HCE,14317,HD-ID,2.90E+07,high,wk12,29595.0,4.471,11,not_protected,HCE_52
+116,HCL IV pre,GSM6735686,Whole Blood,Macaca mulatta,9544,Whole Blood,HCL,13517,IV,3.70E+07,high,pre,45.0,1.663,3,protected,HCL_45
+117,HCL IV d2,GSM6735687,Whole Blood,Macaca mulatta,9544,Whole Blood,HCL,13517,IV,3.70E+07,high,d2,45.0,1.663,3,protected,HCL_46
+118,HCL IV wk2,GSM6735688,Whole Blood,Macaca mulatta,9544,Whole Blood,HCL,13517,IV,3.70E+07,high,wk2,45.0,1.663,3,protected,HCL_47
+119,HCL IV wk12,GSM6735689,Whole Blood,Macaca mulatta,9544,Whole Blood,HCL,13517,IV,3.70E+07,high,wk12,45.0,1.663,3,protected,HCL_48
+120,O5G HD-ID pre,GSM6735690,Whole Blood,Macaca mulatta,9544,Whole Blood,O5G,14217,HD-ID,2.90E+07,high,pre,50.0,1.708,1,protected,O5G_89
+121,O5G HD-ID d2,GSM6735691,Whole Blood,Macaca mulatta,9544,Whole Blood,O5G,14217,HD-ID,2.90E+07,high,d2,50.0,1.708,1,protected,O5G_90
+122,O5G HD-ID wk2,GSM6735692,Whole Blood,Macaca mulatta,9544,Whole Blood,O5G,14217,HD-ID,2.90E+07,high,wk2,50.0,1.708,1,protected,O5G_91
+123,O5G HD-ID wk12,GSM6735693,Whole Blood,Macaca mulatta,9544,Whole Blood,O5G,14217,HD-ID,2.90E+07,high,wk12,50.0,1.708,1,protected,O5G_92
+124,O96 ID pre,GSM6735694,Whole Blood,Macaca mulatta,9544,Whole Blood,O96,13217,ID,3.10E+05,low,pre,58960.0,4.771,15,not_protected,O96_73
+125,O96 ID d2,GSM6735695,Whole Blood,Macaca mulatta,9544,Whole Blood,O96,13217,ID,3.10E+05,low,d2,58960.0,4.771,15,not_protected,O96_74
+126,O96 ID wk2,GSM6735696,Whole Blood,Macaca mulatta,9544,Whole Blood,O96,13217,ID,3.10E+05,low,wk2,58960.0,4.771,15,not_protected,O96_75
+127,O96 ID wk12,GSM6735697,Whole Blood,Macaca mulatta,9544,Whole Blood,O96,13217,ID,3.10E+05,low,wk12,58960.0,4.771,15,not_protected,O96_76
+128,OHJ AE pre,GSM6735698,Whole Blood,Macaca mulatta,9544,Whole Blood,OHJ,13017,AE,3.70E+07,high,pre,70928.0,4.851,21,not_protected,OHJ_37
+129,OHJ AE d2,GSM6735699,Whole Blood,Macaca mulatta,9544,Whole Blood,OHJ,13017,AE,3.70E+07,high,d2,70928.0,4.851,21,not_protected,OHJ_38
+130,OHJ AE wk2,GSM6735700,Whole Blood,Macaca mulatta,9544,Whole Blood,OHJ,13017,AE,3.70E+07,high,wk2,70928.0,4.851,21,not_protected,OHJ_39
+131,OHJ AE wk12,GSM6735701,Whole Blood,Macaca mulatta,9544,Whole Blood,OHJ,13017,AE,3.70E+07,high,wk12,70928.0,4.851,21,not_protected,OHJ_40
+132,OMI HD-ID pre,GSM6735702,Whole Blood,Macaca mulatta,9544,Whole Blood,OMI,14117,HD-ID,2.90E+07,high,pre,67930.0,4.832,22,not_protected,OMI_69
+133,OMI HD-ID d2,GSM6735703,Whole Blood,Macaca mulatta,9544,Whole Blood,OMI,14117,HD-ID,2.90E+07,high,d2,67930.0,4.832,22,not_protected,OMI_70
+134,OMI HD-ID wk2,GSM6735704,Whole Blood,Macaca mulatta,9544,Whole Blood,OMI,14117,HD-ID,2.90E+07,high,wk2,67930.0,4.832,22,not_protected,OMI_71
+135,OMI HD-ID wk12,GSM6735705,Whole Blood,Macaca mulatta,9544,Whole Blood,OMI,14117,HD-ID,2.90E+07,high,wk12,67930.0,4.832,22,not_protected,OMI_72
+136,ONF ID/AE pre,GSM6735706,Whole Blood,Macaca mulatta,9544,Whole Blood,ONF,13317,ID/AE,3.7E+07 / 3.1E+05,high,pre,397671.0,5.6,11,not_protected,ONF_61
+137,ONF ID/AE d2,GSM6735707,Whole Blood,Macaca mulatta,9544,Whole Blood,ONF,13317,ID/AE,3.7E+07 / 3.1E+05,high,d2,397671.0,5.6,11,not_protected,ONF_62
+138,ONF ID/AE wk2,GSM6735708,Whole Blood,Macaca mulatta,9544,Whole Blood,ONF,13317,ID/AE,3.7E+07 / 3.1E+05,high,wk2,397671.0,5.6,11,not_protected,ONF_63
+139,ONF ID/AE wk12,GSM6735709,Whole Blood,Macaca mulatta,9544,Whole Blood,ONF,13317,ID/AE,3.7E+07 / 3.1E+05,high,wk12,397671.0,5.6,11,not_protected,ONF_64
+140,OTM ID pre,GSM6735710,Whole Blood,Macaca mulatta,9544,Whole Blood,OTM,12917,ID,3.10E+05,low,pre,29030.0,4.463,27,not_protected,OTM_33
+141,OTM ID d2,GSM6735711,Whole Blood,Macaca mulatta,9544,Whole Blood,OTM,12917,ID,3.10E+05,low,d2,29030.0,4.463,27,not_protected,OTM_34
+142,OTM ID wk2,GSM6735712,Whole Blood,Macaca mulatta,9544,Whole Blood,OTM,12917,ID,3.10E+05,low,wk2,29030.0,4.463,27,not_protected,OTM_35
+143,OTM ID wk12,GSM6735713,Whole Blood,Macaca mulatta,9544,Whole Blood,OTM,12917,ID,3.10E+05,low,wk12,29030.0,4.463,27,not_protected,OTM_36
