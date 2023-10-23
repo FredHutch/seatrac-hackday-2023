@@ -25,6 +25,9 @@ Follow link: https://washington.zoom.us/meeting/register/tJ0sf-GtrjMtHtAekQf7Ew-
 
 DATASET(S) 
 
+Private link on Figshare:
+https://figshare.com/s/25e373e82768a95bc175
+
 Foreman et al., 2023: bulk RNAseq from sorted cells in NHP Mtb challenge model 
 
 Gideon et al., 2022: scRNAseq from granulomas in NHP Mtb challenge model 
@@ -49,9 +52,6 @@ https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE228114 for the superset th
 
 DATA SUMMARY: n=4 Rhesus macaques, Mtb challenge (40–80 CFU of Mtb-Erdman-mCherry and euthanized 6–7 wk after infection); bulk RNAseq from FACS sorted T cells 
 
- 
-
-Figure 1   
 
  
 

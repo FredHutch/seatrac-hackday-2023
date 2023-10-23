@@ -1,0 +1,9 @@
+filename	file_type	species_scientific_name	genome_assembly_name	genome_assembly_accession	genome_annotation_name	is_raw_counts	library_preparation_protocol	units	biosample_input_type	modality
+4Week_countsmatrix.mtx	MM Coordinate Matrix	Macaca fascicularis				true	Seq-Well S^3	UMI-corrected raw counts	Whole cell	Transcriptomic: unbiased
+4Week_features.tsv	10X Genes File									
+4Week_barcodes.tsv	10X Barcodes File									
+4Week_datamatrix.mtx	MM Coordinate Matrix	Macaca fascicularis					Seq-Well S^3		Whole cell	Transcriptomic: unbiased
+4Week_datafeatures.tsv	10X Genes File									
+4Week_databarcodes.tsv	10X Barcodes File									
+4Week_ClusteringDF.csv	Cluster									
+Updated4wk_alexandria_structured_metadata3.txt	Metadata									
