@@ -9,7 +9,7 @@ from fg_shared import _fg_data
 
 data_folder = opj(_fg_data, 'SEATRAC/TB_hackday_2023/data/darrah_etal')
 
-def load_data(load_raw=False):
+def load_data():
     """Meta-data file contains cell-level data for Week 13 and Week 25"""
     md = pd.read_csv(opj(data_folder, 'updated_alexandria_metadata.txt'), sep='\t', low_memory=False)
     md = md.iloc[1:]

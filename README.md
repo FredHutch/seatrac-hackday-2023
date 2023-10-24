@@ -22,8 +22,7 @@ Registration:
 
 # DATASETS 
 
-Private link on Figshare:
-https://figshare.com/s/25e373e82768a95bc175
+Link to aggregated datasets on [Figshare](https://figshare.com/articles/dataset/SEATRAC_TB_Hackday_2023/24425053)
 
 Foreman et al., 2023: bulk RNAseq from sorted cells in NHP Mtb challenge model 
 
