@@ -1,0 +1,77 @@
+---
+title: "Foreman et al"
+author: "Fergal Duffy"
+date: "2023-10-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+library("tidyverse")
+library("ggplot2")
+library("ggbeeswarm")
+library("ggExtra")
+```
+
+## R Markdown
+
+
+```{r}
+
+data_filename =  '../foreman_etal/GSE227653_TPM_all.csv.gz'
+meta_filename =  '../foreman_etal/GSE227653_family.soft.csv'
+
+meta = read_csv(meta_filename)
+counts = read_csv(data_filename)
+
+keepCols = c('biosample', 'entrez_gene', 'gene_name_clc', 'Expression_value',
+                  'TPM', 'RPKM', 'Exons', 'Gene_length', 'GeneID', 'Unique_gene_reads',
+                  'Total_gene_reads', 'Transcripts_annotated', 'Detected_transcripts',
+                  'Exon_length', 'Unique_exon_reads', 'Total_exon_reads')
+
+missingMetaData <- unique(counts$biosample)[!unique(counts$biosample) %in% meta$biosample]
+if (length(missingMetaData) > 0) {
+  message('Missing meta-data: ')
+  message(missingMetaData)
+}
+
+```
+
+```{r} 
+counts <- select(counts, one_of(keepCols)) %>%
+  left_join(meta, by="biosample")
+
+counts %>%
+  group_by(gene_name_clc, `cell type`) %>%
+  summarize(medTPM=median(TPM)) %>%
+  pivot_wider(names_from=`cell type`, values_from=medTPM) %>%
+  arrange(desc(`CD8 granuloma T cell`)) %>%
+  head(20)
+
+```
+```{r}
+counts %>%
+  filter(gene_name_clc=="IFNG") %>%
+  ggplot(aes(x=`cell type`, y=TPM, colour=`cell type`)) +
+    geom_boxplot(outlier.shape=NA) +
+    geom_beeswarm() +
+    facet_wrap(~gene_name_clc) +
+    guides(colour="none") 
+    
+
+```
+
+```{r}
+plotCounts <- counts %>%
+  filter(gene_name_clc=="GZMB") %>%
+  pivot_wider(id_cols=c(subjid, granuloma), names_from=`cell type`, values_from=TPM) %>%
+  filter(!if_any(everything(), is.na)) 
+
+plt <- ggplot(plotCounts, aes(x=`CD8 granuloma T cell`, y=`CD4 granuloma T cell`)) +
+  geom_point() +
+  stat_smooth(method="lm") +
+  theme_bw()
+
+ggMarginal(plt, type="densigram")
+
+```
