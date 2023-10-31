@@ -4,7 +4,7 @@ Wednesday, December 13, 2023
 9 AM to 3 PM (Pacific Time)
 
 UW SLU F106/F107 and Zoom (University of Washington South Lake Union Campus)
-([Zoom link, registration required](https://urldefense.com/v3/__https://washington.zoom.us/meeting/register/tJ0sf-GtrjMtHtAekQf7Ew-m4_oYOvm78vVB__;!!GuAItXPztq0!nEXklIjP7jjBX1StCKX1p08_DtEWjHU6skNOBaO0ntWCECjyQD9WB8glSFwDTxCp98VbKIU_x7RSTnc2p_c$))
+([Zoom link, registration required](https://washington.zoom.us/meeting/register/tJ0sf-GtrjMtHtAekQf7Ew-m4_oYOvm78vVB))
 
 Goal: Collaborating in small groups to develop new analytical insights
 from 4 published bulk and single-cell RNAseq datasets that profile NHP
