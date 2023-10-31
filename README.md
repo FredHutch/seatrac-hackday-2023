@@ -26,13 +26,15 @@ Link to aggregated datasets on [Figshare](https://figshare.com/articles/dataset/
 
 Foreman et al., 2023: bulk RNAseq from sorted cells in NHP Mtb challenge model 
 
-Gideon et al., 2022: scRNAseq from granulomas in NHP Mtb challenge model 
+Gideon et al., 2022: scRNAseq from granulomas in NHP Mtb challenge model
 
 Darrah et al., 2023: scRNAseq from BAL in NHP Mtb challenge (BCG route, correlates of protection) 
 
 Liu et al., 2023: whole-blood bulk RNAseq from NHP Mtb challenge (BCG route and IV BCG dose, should match Darrah et al. study) 
 
  
+NOTE: For the Gideon et al. and Darrah et al. single-cell datasets there is also a pseudo-bulk dataset that was created by summing raw counts across cells within a sample and an annotated cell type. Cell annotations from the original data were used for the summation. The resulting CSV contains counts for each sample, cell type and gene.
+
 ---
 
 ## Foreman et al., 2023: bulk RNAseq from sorted cells in NHP Mtb challenge model 

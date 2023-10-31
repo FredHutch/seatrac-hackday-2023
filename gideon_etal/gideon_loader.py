@@ -1,5 +1,5 @@
 import numpy as np
-import scanpy as sc
+# import scanpy as sc
 import pandas as pd
 
 import sys
@@ -7,9 +7,9 @@ from os.path import join as opj
 
 from fg_shared import _fg_data
 
+bigdata_folder = opj(_fg_data, 'SEATRAC/TB_hackday_2023/bigdata')
 wk4_folder = opj(_fg_data, 'SEATRAC/TB_hackday_2023/data/gideon_etal/4week')
 wk10_folder = opj(_fg_data, 'SEATRAC/TB_hackday_2023/data/gideon_etal/10week')
-
 
 def load_4week_data(load_raw=False):
     md = pd.read_csv(opj(wk4_folder, 'Updated4wk_alexandria_structured_metadata3.txt'), sep='\t')
@@ -58,3 +58,18 @@ def load_10week_data(load_raw=False):
     
     return md, pd.concat((cts1, cts2), axis=1)
 
+def load_4week_pseudo_bulk():
+    md = pd.read_csv(opj(wk4_folder, 'Updated4wk_alexandria_structured_metadata3.txt'), sep='\t')
+    md = md.iloc[1:]
+
+    md = md.assign(sampleid=md.apply(lambda r: f'D{r["donor_id"]}_{r["CellTypeAnnotations"]}', axis=1))
+    cts = pd.read_csv(opj(wk4_folder, 'pseudo_bulk_4week.csv'))
+    return md, cts
+
+def load_10week_pseudo_bulk():
+    md = pd.read_csv(opj(wk10_folder, 'Updated10wk_alexandria_structured_metadata10.txt'), sep='\t', low_memory=False)
+    md = md.iloc[1:]
+    
+    md = md.assign(sampleid=md.apply(lambda r: f'D{r["donor_id"]}_{r["biosample_id"]}', axis=1))
+    cts = pd.read_csv(opj(wk4_folder, 'pseudo_bulk_10week.csv'))
+    return md, cts
