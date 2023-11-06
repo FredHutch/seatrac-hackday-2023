@@ -16,6 +16,8 @@ library("tmod")
 library("msigdbr")
 library("DESeq2")
 library("pheatmap")
+library("igraph")
+library("WGCNA")
 ```
 
 ## Preparing the data
@@ -213,10 +215,11 @@ tCellResponseEnrichment <- fgsea(pathways=gsets,
 sigGeneSets <- tCellResponseEnrichment %>%
   data.frame() %>%
   filter(padj < 0.01) %>%
-  arrange(desc(NES))
+  arrange(NES) %>%
+  mutate(pathway=factor(pathway, levels=pathway))
 
 #Plot the most strongly increased pathway
-topPathway <- slice_max(sigGeneSets, n=1, order_by=NES)$pathway
+topPathway <- as.character(slice_max(sigGeneSets, n=1, order_by=NES)$pathway)
 
 plotEnrichment(gsets[[topPathway]],
                set_names(tCellResponseGenes$log2FoldChange,
@@ -232,3 +235,128 @@ ggplot(sigGeneSets, aes(y=pathway, x=NES, fill=NES)) +
 
 ```
 
+## Unsupervised clustering using WGCNA
+
+
+
+```{r}
+
+normCountMat <- longCounts %>%
+  filter(gene %in% annotatedGenes) %>%
+  select(gene, countColID, normExpr) %>%
+  pivot_wider(names_from="gene", values_from="normExpr") %>%
+  column_to_rownames("countColID") %>%
+  as.matrix()
+
+powers <-  seq(from = 1, to = 20, by = 2)
+
+softThreshPower <- pickSoftThreshold(
+  normCountMat,   
+  powerVector = powers,
+  verbose = 5)
+
+ggplot(softThreshPower$fitIndices, aes(x=Power, y=-sign(slope) * SFT.R.sq, label=Power)) +
+  geom_text()
+
+ggplot(softThreshPower$fitIndices, aes(x=Power, y=mean.k., label=Power)) +
+  geom_text()
+
+wgncaNetwork <- blockwiseModules(datExpr=normCountMat, 
+                                 power=softThreshPower$powerEstimate,
+                                 saveTOMs=T)
+
+wcgnaLabels <- data.frame(colorLabel=wgncaNetwork$colors,
+                          gene=names(wgncaNetwork$colors)) %>%
+  split(.$colorLabel) %>%
+  map(\(df)df$gene)
+
+wgcnaModuleCounts <- table(wgncaNetwork$colors)
+#One module has the vast majority of genes. Since most genes don't respond
+#presumably it's the module of non-reponsive genes
+
+#How do the wgcna modules compare with coherently expressed modules
+#Lets look at gene level overlaps and test with hypergeometric test
+
+modulePairs <- expand.grid(WGCNA=names(wgcnaModuleCounts),
+                           BTMs=names(gsets))
+
+
+wcgnaBtmStats <- map2_dfr(modulePairs$WGCNA, modulePairs$BTMs, \(wgcnaName, btmName){
+  wgcnaGenes <- wcgnaLabels[[wgcnaName]]
+  btmGenes <- gsets[[btmName]]
+  sharedGenes <- intersect(wgcnaGenes, btmGenes)
+  pOverlap <- if(length(sharedGenes)==0) {
+    1
+  } else{
+    1 - phyper(length(sharedGenes),
+               length(btmGenes),
+               length(unique(unlist(gsets))),
+               length(wgcnaGenes),
+               lower.tail=T)
+  }
+  data.frame(wgcnaName=wgcnaName, btmName=btmName,
+             nWgcnaGenes=length(wgcnaGenes), nBtmGenes=length(btmGenes), nSharedGenes=length(sharedGenes),
+             pOverlap=pOverlap)
+}) %>% mutate(FDR=p.adjust(pOverlap, method="fdr"))
+
+
+wcgnaBtmStats %>%
+  filter(FDR<0.05 & nSharedGenes>=5) %>%
+  ggplot(aes(y=btmName, x=wgcnaName, fill=nSharedGenes)) +
+    geom_tile() +
+    scale_fill_distiller(palette = "YlOrRd", direction=1) +
+    theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0.5))
+
+#Now, average WGCNA module by cell type and vaccination status
+
+WGNAmodStats <- longCounts %>%
+  left_join(data.frame(gene=names(wgncaNetwork$colors),
+                       WGCNAmod=wgncaNetwork$colors)) %>%
+    filter(!is.na(WGCNAmod)) %>%
+  group_by(WGCNAmod) %>%
+  summarize(aveModExpr=mean(normExpr, trim=0.25), sdModExpr=sd(normExpr))
+  
+
+aveWGNAexprByStatusAndCellType <- longCounts %>%
+  left_join(data.frame(gene=names(wgncaNetwork$colors),
+                       WGCNAmod=wgncaNetwork$colors)) %>%
+  filter(!is.na(WGCNAmod)) %>%
+  group_by(WGCNAmod, status, cell_type__ontology_label) %>%
+  summarize(modExprPerStatusPerCellType=mean(normExpr, trim=0.25)) %>%
+  ungroup() %>%
+  left_join(WGNAmodStats, by="WGCNAmod") %>%
+  mutate(scaledModExprPerStatusPerCellType = (modExprPerStatusPerCellType-aveModExpr)/sdModExpr)
+
+statusAnnots <- longCounts %>%
+  select(celltype=cell_type__ontology_label, status, VaccineRoute,
+         timepoint=vaccination__time_since, stim=Stimulated) %>%
+  distinct() %>%
+  mutate(colName=paste(celltype, status, sep="|"), timepoint=factor(timepoint)) %>%
+  select(-status) %>%
+  column_to_rownames("colName")
+
+aveWGNAexprByStatusAndCellTypeWide <- aveWGNAexprByStatusAndCellType %>%
+  select(WGCNAmod, status, cell_type__ontology_label, scaledModExprPerStatusPerCellType) %>%
+  mutate(label=paste(cell_type__ontology_label, status, sep="|")) %>%
+  select(label,WGCNAmod, scaledModExprPerStatusPerCellType) %>%
+  pivot_wider(names_from=label, values_from=scaledModExprPerStatusPerCellType) %>%
+  column_to_rownames("WGCNAmod")
+
+annotColors <- list(celltype=c("B cell"="purple",
+                              "eosinophil"="yellow",
+                              "epithelial cell"="grey",
+                              "macrophage"="green",
+                              "mast cell"="orange",
+                              "neutrophil"="red",
+                              "T cell"="black"),
+                    stim=c(NO="white", YES="black"),
+                    timepoint=c(`13`="white", `25`="grey"),
+                    VaccineRoute=c(Naive="white", AE="purple", 
+                                   IDHigh="darkgreen", IDLow="green", 
+                                   IV="firebrick"))
+
+pheatmap(aveWGNAexprByStatusAndCellTypeWide,
+         annotation_col = statusAnnots,
+         show_colnames = F, annotation_colors = annotColors)
+
+```
