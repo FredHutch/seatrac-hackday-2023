@@ -10,13 +10,14 @@ Github link: [FredHutch/seatrac-hackday-2023](https://github.com/FredHutch/seatr
 |Start time|Activity|
 |----------|--------|
 8:30 AM | Gather with coffee and light breakfast
-9:10 | Opening remarks (Shuyi Ma, Andrew Fiore-Gartland)
-9:20 | Lightning talk on dataset (Andrew Fiore-Gartland)
-9:30 | Small group session: devise questions, hypotheses and analysis plans
-10:30 | F106: Hands-on tutorial: RNA seq and single-cell RNA seq 101 (Kim Dill-McFarland)
-      | F107: Hack time
+9:05 | Opening remarks (Shuyi Ma, Andrew Fiore-Gartland)
+9:15 | Introduction to the datasets (Andrew Fiore-Gartland)
+9:45 | Small group session: devise questions, hypotheses and analysis plans
+10:30 | F106: Hands-on tutorial: Bulk RNA seq differential expression and single-cell Seurat workflow (Kim Dill-McFarland)
+10:30 | F107: Hack time
 11:30 | Working lunch
 12:30 | F106: Hands-on tutorial: Gene/cell clustering and network analysis (Shuyi Ma)
-      | F107: Hack time
+12:30 | F107: Hack time
 1:30 | Open hack time
 2:30 | Small group readouts: Each group shares preliminary figures, analysis plans, code chunks
+
