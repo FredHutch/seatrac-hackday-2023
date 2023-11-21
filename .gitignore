@@ -1,2 +1,7 @@
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+.Rproj.user
+*.Rhistory
+
+# MAC
+*.DS_Store
