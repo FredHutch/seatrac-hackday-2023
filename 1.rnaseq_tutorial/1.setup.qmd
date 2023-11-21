@@ -1,0 +1,92 @@
+---
+title: "Setup and installation"
+author: "Kim Dill-McFarland"
+date: "version `r format(Sys.time(), '%B %d, %Y')`"
+html:
+    toc: true
+    toc-expand: 2
+    html-math-method: katex
+editor: source
+editor_options:
+  chunk_output_type: console
+---
+
+# Data introduction
+
+We will be working with one of the Hackday data sets. 
+
+> Darrah PA *et al*. Airway T-cells are a correlate of i.v. Bacille Calmette-Guerin-mediated protection against tuberculosis in rhesus macaques. Cell Host Microbe. 2023 Jun 14;31(6):962-977.e8. doi: [10.1016/j.chom.2023.05.006](https://doi.org/10.1016/j.chom.2023.05.006). PMID: 37267955; PMCID: PMC10355173.
+
+These data are single-cell RNAseq from *Rhesus macaques* (N=15) with and without BCG vaccination as well as before and after *M. tuberculosis* (Mtb) challenge. Vaccinations include aerosol (AE), intradermal high-dose (IDhigh), intradermal low-dose (IDlow), intravenous (IV), and naïve-controls. Bronchoalveolar lavage (BAL) was collected at weeks 13 and 25 prior to Mtb challenge at week 26.
+
+You can explore the data at <https://singlecell.broadinstitute.org/single_cell/study/SCP796/prevention-of-mycobacterium-tuberculosis-infection-and-disease-in-nonhuman-primates-following-intravenous-bcg-vaccination?scpbr=the-alexandria-project> 
+
+# Download and install
+## At the Hackday
+
+An RStudio server with the necessary data and R packages has been setup for the event. Sign-in instructions will be given at the event.
+
+## On your own
+### Download the data
+
+You can find all the data used in this tutorial at <https://github.com/FredHutch/seatrac-hackday-2023/tree/main/1.rnaseq_tutorial/data>. Download each file and save them somewhere you'll be able to find them during the Hackday.
+
+### Install R and RStudio
+
+* Install R, <https://cran.r-project.org/index.html>
+    - If you already have R installed, please upgrade to version 4.1 or newer
+* Install RStudio (free version), <https://www.rstudio.com/products/rstudio/download/>
+
+When you open RStudio, it should look like so with multiple panels. If you see only 1 panel, then you’re likely in R, not RStudio.
+
+![](images/rstudio.png){width=50%}
+
+## Install R packages
+
+Install R packages by running a script in your R console in RStudio (left panel in the above image). 
+
+*If prompted*, say `a` to "Update all/some/none? [a/s/n]" and `no` to "Do you want to install from sources the packages which need compilation? (Yes/no/cancel)"
+
+**This can take several minutes.**
+
+```{r eval=FALSE}
+#CRAN packages
+install.packages("tidyverse", Ncpus=4)
+install.packages("Seurat", Ncpus=4)
+install.packages(c("patchwork"))
+#Bioconductor packages
+install.packages("BiocManager")
+BiocManager::install(c("edgeR", "limma"))
+#GitHub packages
+install.packages("devtools")
+devtools::install_github("BIGslu/RNAetc")
+devtools::install_github("BIGslu/kimma")
+```
+
+### Check R package install
+
+To make sure packages are correctly installed, load each of them individually into R with `library( )`. 
+
+For example, the `tidyverse` is a meta-package containing multiple packages. It gives the following message when loaded into R. Your exact version numbers way vary slightly.
+
+```{r}
+library(tidyverse)
+```
+
+In contrast, packages such as `limma` load silently with no messages.
+
+```{r}
+library(limma)
+```
+
+The key is to look for any messages that contain `ERROR` or `there is no package called X`. This means the package was not installed correctly.
+
+# *Navigation*
+
+* [Next lesson][deg]
+* [Hackday GitHub][index]
+
+***
+
+[index]: https://github.com/FredHutch/seatrac-hackday-2023
+[deg]: https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/2.Bulk_RNAseq_deg_analysis.html
