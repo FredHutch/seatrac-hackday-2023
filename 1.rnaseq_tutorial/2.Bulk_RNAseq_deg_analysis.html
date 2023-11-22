@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kim Dill-McFarland">
-<meta name="dcterms.date" content="2023-11-21">
+<meta name="dcterms.date" content="2023-11-22">
 
 <title>Bulk RNAseq differential expression analysis</title>
 <style>
@@ -71,12 +71,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="2.Bulk_RNAseq_deg_analysis_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#prior-to-the-tutorial" id="toc-prior-to-the-tutorial" class="nav-link" data-scroll-target="#prior-to-the-tutorial">Prior to the tutorial</a></li>
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages">Load packages</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
+  <ul class="collapse">
+  <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description">Data description</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a></li>
+  </ul></li>
+  <li><a href="#introduction-to-linear-modeling" id="toc-introduction-to-linear-modeling" class="nav-link" data-scroll-target="#introduction-to-linear-modeling">Introduction to linear modeling</a></li>
+  <li><a href="#modeling-in-limma" id="toc-modeling-in-limma" class="nav-link" data-scroll-target="#modeling-in-limma">Modeling in <code>limma</code></a>
+  <ul class="collapse">
+  <li><a href="#simple-linear-regression-in-limma" id="toc-simple-linear-regression-in-limma" class="nav-link" data-scroll-target="#simple-linear-regression-in-limma">Simple linear regression in <code>limma</code></a></li>
+  <li><a href="#paired-sample-design-in-limma" id="toc-paired-sample-design-in-limma" class="nav-link" data-scroll-target="#paired-sample-design-in-limma">Paired sample design in <code>limma</code></a></li>
+  </ul></li>
+  <li><a href="#modeling-in-kimma" id="toc-modeling-in-kimma" class="nav-link" data-scroll-target="#modeling-in-kimma">Modeling in <code>kimma</code></a></li>
+  <li><a href="#picking-a-best-fit-model" id="toc-picking-a-best-fit-model" class="nav-link" data-scroll-target="#picking-a-best-fit-model">Picking a best fit model</a></li>
+  <li><a href="#significant-genes" id="toc-significant-genes" class="nav-link" data-scroll-target="#significant-genes">Significant genes</a></li>
+  <li><a href="#navigation" id="toc-navigation" class="nav-link" data-scroll-target="#navigation"><em>Navigation</em></a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><em>Additional resources</em></a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -98,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 21, 2023</p>
+      <p class="date">November 22, 2023</p>
     </div>
   </div>
   
@@ -110,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>RNA-seq data sets have 1000s of genes, but we don’t want to individually run 1000s of statistical models! In this section, we introduce some R packages designed for running linear and mixed effects models across all genes in an efficient manor.</p>
+<p>One common bulk RNAseq analysis is differential expression, which determines individual genes that significantly change by your variables of interest. Most commonly, you will see linear modelings with the R package <code>limma</code> and binomial models with <code>DeSeq2</code>. These and other packages are designed to run statistical models across 1000s of genes in an efficient manor. Here, we will explore <code>limma</code> as well as <code>kimma</code> which expands the RNAseq model framework to mixed effect and covariance models.</p>
 </section>
 <section id="prior-to-the-tutorial" class="level2">
 <h2 class="anchored" data-anchor-id="prior-to-the-tutorial">Prior to the tutorial</h2>
@@ -149,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Darrah PA <em>et al</em>. Airway T-cells are a correlate of i.v. Bacille Calmette-Guerin-mediated protection against tuberculosis in rhesus macaques. Cell Host Microbe. 2023 Jun 14;31(6):962-977.e8. doi: <a href="https://doi.org/10.1016/j.chom.2023.05.006">10.1016/j.chom.2023.05.006</a>. PMID: 37267955; PMCID: PMC10355173.</p>
 </blockquote>
-<p>Specifically, we will be focusing on the T-cell transcriptional responses to <em>M. tuberculosis</em> (Mtb) challenge at week 25 after BCG vaccination. These data are pseudo-bulk counts from the larger single-cell data set, which we will be exploring later on.</p>
+<p>Specifically, we will be focusing on the T-cell transcriptional responses to <em>M. tuberculosis</em> (Mtb) challenge at week 25. For simplicity, we will ignore the vaccination groups, and you may explore them during your Hack time. These data are pseudo-bulk counts from the larger single-cell data set, which we will be exploring during the second part of this tutorial.</p>
 <p>The raw counts data were cleaned and normalized following a standard pipeline. You can learn more at <a href="https://bigslu.github.io/tutorials/RNAseq/2.RNAseq_counts.to.voom.html" class="uri">https://bigslu.github.io/tutorials/RNAseq/2.RNAseq_counts.to.voom.html</a>. The code for cleaning of these data specifically is available at <a href="https://github.com/FredHutch/seatrac-hackday-2023/blob/main/1.rnaseq_tutorial/data_cleaning_bulk.R" class="uri">https://github.com/FredHutch/seatrac-hackday-2023/blob/main/1.rnaseq_tutorial/data_cleaning_bulk.R</a></p>
 </section>
 <section id="load-data" class="level3">
@@ -255,7 +284,7 @@ DDF4N_WK25_STIMYES_T cell           1      1</code></pre>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Estimate significance</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>efit_limma <span class="ot">&lt;-</span> <span class="fu">eBayes</span>(<span class="at">fit =</span> fit_limma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>These outputs contain a lot of information. We can pull out the most commonly used pieces with <code>topTable</code>. By default, this gives your the 10 most significant genes across the entire model.</p>
+<p>These outputs contain a lot of information. We can pull out the most commonly used pieces with <code>topTable</code>. By default, this gives you the 10 most significant genes across the entire model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract results</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fdr_limma <span class="ot">&lt;-</span> <span class="fu">topTable</span>(<span class="at">fit =</span> efit_limma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -291,14 +320,14 @@ LST1    2.556890 6.774452 11.68693 1.580100e-13 3.583929e-10 20.78367</code></pr
 </div>
 <p>The variables included are:</p>
 <ul>
-<li><code>logFC</code>: log fold change. The sign is relative to your reference. For example, negative logFC for virusHRV means HRV minus media is negative and thus, expression is lower in HRV-infected samples.</li>
+<li><code>logFC</code>: log fold change. The sign is relative to your reference. For example, negative logFC for mtbMtb means Mtb minus Media is negative and thus, expression is lower in Mtb-infected samples.</li>
 <li><code>AveExpr</code>: average expression across all samples</li>
 <li><code>t</code>: test statistic for significance</li>
 <li><code>P.Value</code></li>
 <li><code>adj.P.Val</code>: FDR adjusted P-value</li>
 <li><code>B</code>: beta coefficient</li>
 </ul>
-<p>With some <code>tidyverse</code> manipulation, we can get results for all genes and variables in one table. Or you can use the <code>kimma</code> function <code>extract_lmFit</code> and skip the coding! This also renames the columns to match <code>kimma</code>’s output.</p>
+<p>With some <code>tidyverse</code> manipulation, we can get results for all genes and variables in one table. Or you can use the <code>kimma</code> function <code>extract_lmFit</code> and skip the coding! This also renames the columns to match <code>kimma</code>’s output for easier model comparison later on.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fdr_limma <span class="ot">&lt;-</span> <span class="fu">extract_lmFit</span>(<span class="at">design =</span> mm_limma, <span class="at">fit =</span> efit_limma)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -338,12 +367,12 @@ LST1    2.556890 6.774452 11.68693 1.580100e-13 3.583929e-10 20.78367</code></pr
 <pre><code>[1] 0.3554838</code></pre>
 </div>
 </div>
-<p>You can then incorporate this estimate into the <code>limma</code> model. We will not do not here, because we now have a true mixed effects tools in <code>kimma</code>.</p>
+<p>You can then incorporate this estimate into the <code>limma</code> model. We will not do not here, because we now have full mixed effects models in <code>kimma</code>.</p>
 </section>
 </section>
 <section id="modeling-in-kimma" class="level2">
 <h2 class="anchored" data-anchor-id="modeling-in-kimma">Modeling in <code>kimma</code></h2>
-<p><code>kimma</code> supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and matrix random effects. Let’s run the same models as we did with <code>limma</code>.</p>
+<p><code>kimma</code> supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and covariance matrices. Let’s run the same models as we did with <code>limma</code>.</p>
 <p>Note that <code>kimma</code> is slower than <code>limma</code>. It can be run on multiple processors to increase speed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fit_kimma <span class="ot">&lt;-</span> <span class="fu">kmFit</span>(<span class="at">dat =</span> dat_tcell, </span>
@@ -401,8 +430,9 @@ LST1    2.556890 6.774452 11.68693 1.580100e-13 3.583929e-10 20.78367</code></pr
 6 lm.fit AACS    0.853  49.1  53.3 0.00262 -0.0330 </code></pre>
 </div>
 </div>
-<section id="picking-a-best-fit-model" class="level3">
-<h3 class="anchored" data-anchor-id="picking-a-best-fit-model">Picking a best fit model</h3>
+</section>
+<section id="picking-a-best-fit-model" class="level2">
+<h2 class="anchored" data-anchor-id="picking-a-best-fit-model">Picking a best fit model</h2>
 <p>We can now look at metrics like AIC where we see that best fit varies by gene (which is very common)…</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fit_kimma_all <span class="ot">&lt;-</span> <span class="fu">full_join</span>(fit_kimma<span class="sc">$</span>lm.fit, </span>
@@ -425,7 +455,9 @@ LST1    2.556890 6.774452 11.68693 1.580100e-13 3.583929e-10 20.78367</code></pr
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
 <span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"AIC"</span>, <span class="at">color=</span><span class="st">"AIC difference"</span>) <span class="sc">+</span></span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey40"</span>,<span class="st">"orange"</span>,<span class="st">"darkred"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey40"</span>,<span class="st">"orange"</span>,<span class="st">"darkred"</span>)) <span class="sc">+</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x=</span><span class="dv">150</span>, <span class="at">y=</span><span class="dv">0</span>, <span class="at">label=</span><span class="st">"Better fit by lme"</span>)<span class="sc">+</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x=</span><span class="dv">0</span>, <span class="at">y=</span><span class="dv">150</span>, <span class="at">label=</span><span class="st">"Better fit by lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="2.Bulk_RNAseq_deg_analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -451,10 +483,9 @@ LST1    2.556890 6.774452 11.68693 1.580100e-13 3.583929e-10 20.78367</code></pr
 <pre><code>[1] 924393.8</code></pre>
 </div>
 </div>
-<p>In general, differences in mean AIC &lt; 2 show that either model is appropriate, differences from 2 to 7 are moderate evidence for the lower value model, and differences greater than 7 are strong evidence for the lower value model.</p>
+<p>In general, differences in mean AIC &lt; 2 show that either model is appropriate, differences from 2 to 7 are moderate evidence for the lower AIC model, and differences greater than 7 are strong evidence for the lower AIC model.</p>
 <p>So in this case, which model do we go with? AIC slightly supports the simple model but our study design is paired… Always use your scientific reasoning first! If you know that there is a study design feature or confounding covariate, keep them in the model even if the AIC says otherwise. Be smarter than your data!</p>
 <p>For this experiment, we know we have a paired design so either <code>limma</code> with <code>duplicateCorrelation</code> or <code>kimma</code> with <code>run.lme</code> is appropriate. In our experience, a true mixed effects model in <code>kimma</code> yields fewer false positive genes when you have a paired design, even if metrics like AIC do not support it as the best fit model.</p>
-</section>
 </section>
 <section id="significant-genes" class="level2">
 <h2 class="anchored" data-anchor-id="significant-genes">Significant genes</h2>
