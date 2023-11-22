@@ -19,6 +19,10 @@ Breakfast included starting at 8:30am, lunch included at noon, happy hour snacks
 Registration: 
 [Online registration using Zoom](https://washington.zoom.us/meeting/register/tJ0sf-GtrjMtHtAekQf7Ew-m4_oYOvm78vVB)
 
+# TUTORIALS
+
+1. [Bulk RNAseq differential expression](https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/2.Bulk_RNAseq_deg_analysis.html)
+2. [scRNAseq ordinations](https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/3.scRNAseq_analysis.html)
 
 # DATASETS 
 
