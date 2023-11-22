@@ -29,7 +29,7 @@ An RStudio server with the necessary data and R packages has been setup for the 
 ## On your own
 ### Download the data
 
-You can find all the data used in this tutorial at <https://github.com/FredHutch/seatrac-hackday-2023/tree/main/1.rnaseq_tutorial/data>. Download each file and save them somewhere you'll be able to find them during the Hackday.
+You can find all the data used in this tutorial at <https://github.com/FredHutch/seatrac-hackday-2023/tree/main/1.rnaseq_tutorial/data>. Download each file and save them wherever you've made your Rproject.
 
 ### Install R and RStudio
 
@@ -53,14 +53,25 @@ Install R packages by running a script in your R console in RStudio (left panel 
 #CRAN packages
 install.packages("tidyverse", Ncpus=4)
 install.packages("Seurat", Ncpus=4)
-install.packages(c("patchwork"))
 #Bioconductor packages
 install.packages("BiocManager")
-BiocManager::install(c("edgeR", "limma"))
+BiocManager::install("limma")
 #GitHub packages
 install.packages("devtools")
-devtools::install_github("BIGslu/RNAetc")
 devtools::install_github("BIGslu/kimma")
+```
+
+## Optional install data cleaning R packages
+
+These packages are not used in the actual tutorial but are part of the data cleaning scripts used to prepare the data. If you would like to explore the data cleaning steps, please also install the following.
+
+```{r eval=FALSE}
+#CRAN packages
+install.packages(c("patchwork", "data.table", "janitor"))
+#Bioconductor packages
+BiocManager::install("edgeR")
+#GitHub packages
+devtools::install_github("BIGslu/RNAetc")
 ```
 
 ### Check R package install
