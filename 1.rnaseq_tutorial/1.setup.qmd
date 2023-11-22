@@ -96,7 +96,7 @@ The key is to look for any messages that contain `ERROR` or `there is no package
 
 # *Navigation*
 
-* Next lesson: [Bulk RNAseq][lesson1]
+* Next lesson: [Bulk RNAseq][lesson2]
 * [Hackday GitHub][index]
 
 ***
