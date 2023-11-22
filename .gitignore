@@ -5,3 +5,6 @@
 
 # MAC
 *.DS_Store
+
+# Tutorial data, large
+1.rnaseq_tutorial/data/GSE139598_Week25_Unstimulated.Cells.UMI.collapsed.csv.gz
