@@ -15,7 +15,7 @@ editor_options:
 
 ## Overview
 
-RNA-seq data sets have 1000s of genes, but we don't want to individually run 1000s of statistical models! In this section, we introduce some R packages designed for running linear and mixed effects models across all genes in an efficient manor.
+One common bulk RNAseq analysis is differential expression, which determines individual genes that significantly change by your variables of interest. Most commonly, you will see linear modelings with the R package `limma` and binomial models with `DeSeq2`. These and other packages are designed to run statistical models across 1000s of genes in an efficient manor. Here, we will explore `limma` as well as `kimma` which expands the RNAseq model framework to mixed effect and covariance models.
 
 ## Prior to the tutorial
 
@@ -42,7 +42,7 @@ We will be using data from
 
 > Darrah PA *et al*. Airway T-cells are a correlate of i.v. Bacille Calmette-Guerin-mediated protection against tuberculosis in rhesus macaques. Cell Host Microbe. 2023 Jun 14;31(6):962-977.e8. doi: [10.1016/j.chom.2023.05.006](https://doi.org/10.1016/j.chom.2023.05.006). PMID: 37267955; PMCID: PMC10355173.
 
-Specifically, we will be focusing on the T-cell transcriptional responses to *M. tuberculosis* (Mtb) challenge at week 25 after BCG vaccination. These data are pseudo-bulk counts from the larger single-cell data set, which we will be exploring later on.
+Specifically, we will be focusing on the T-cell transcriptional responses to *M. tuberculosis* (Mtb) challenge at week 25. For simplicity, we will ignore the vaccination groups, and you may explore them during your Hack time. These data are pseudo-bulk counts from the larger single-cell data set, which we will be exploring during the second part of this tutorial.
 
 The raw counts data were cleaned and normalized following a standard pipeline. You can learn more at <https://bigslu.github.io/tutorials/RNAseq/2.RNAseq_counts.to.voom.html>. The code for cleaning of these data specifically is available at <https://github.com/FredHutch/seatrac-hackday-2023/blob/main/1.rnaseq_tutorial/data_cleaning_bulk.R>
 
@@ -113,7 +113,7 @@ fit_limma <- lmFit(object = dat_tcell$E,
 efit_limma <- eBayes(fit = fit_limma)
 ```
 
-These outputs contain a lot of information. We can pull out the most commonly used pieces with `topTable`. By default, this gives your the 10 most significant genes across the entire model.
+These outputs contain a lot of information. We can pull out the most commonly used pieces with `topTable`. By default, this gives you the 10 most significant genes across the entire model.
 
 ```{r}
 #Extract results
@@ -132,14 +132,14 @@ head(fdr_limma_mtb)
 
 The variables included are:
 
-* `logFC`: log fold change. The sign is relative to your reference. For example, negative logFC for virusHRV means HRV minus media is negative and thus, expression is lower in HRV-infected samples.
+* `logFC`: log fold change. The sign is relative to your reference. For example, negative logFC for mtbMtb means Mtb minus Media is negative and thus, expression is lower in Mtb-infected samples.
 * `AveExpr`: average expression across all samples
 * `t`: test statistic for significance
 * `P.Value`
 * `adj.P.Val`: FDR adjusted P-value
 * `B`: beta coefficient
 
-With some `tidyverse` manipulation, we can get results for all genes and variables in one table. Or you can use the `kimma` function `extract_lmFit` and skip the coding! This also renames the columns to match `kimma`'s output.
+With some `tidyverse` manipulation, we can get results for all genes and variables in one table. Or you can use the `kimma` function `extract_lmFit` and skip the coding! This also renames the columns to match `kimma`'s output for easier model comparison later on.
 
 ```{r}
 fdr_limma <- extract_lmFit(design = mm_limma, fit = efit_limma)
@@ -161,11 +161,11 @@ consensus.corr <- duplicateCorrelation(object = dat_tcell$E,
 consensus.corr$consensus.correlation
 ```
 
-You can then incorporate this estimate into the `limma` model. We will not do not here, because we now have a true mixed effects tools in `kimma`.
+You can then incorporate this estimate into the `limma` model. We will not do not here, because we now have full mixed effects models in `kimma`.
 
 ## Modeling in `kimma`
 
-`kimma` supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and matrix random effects. Let's run the same models as we did with `limma`.
+`kimma` supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and covariance matrices. Let's run the same models as we did with `limma`.
 
 Note that `kimma` is slower than `limma`. It can be run on multiple processors to increase speed.
 
@@ -185,7 +185,7 @@ head(fit_kimma$lm)
 head(fit_kimma$lm.fit)
 ```
 
-### Picking a best fit model
+## Picking a best fit model
 
 We can now look at metrics like AIC where we see that best fit varies by gene (which is very common)...
 
@@ -210,7 +210,9 @@ fit_kimma_all %>%
   theme_classic() +
   coord_fixed() +
   labs(title = "AIC", color="AIC difference") +
-  scale_color_manual(values=c("grey40","orange","darkred"))
+  scale_color_manual(values=c("grey40","orange","darkred")) +
+  annotate("text", x=150, y=0, label="Better fit by lme")+
+  annotate("text", x=0, y=150, label="Better fit by lm")
 ```
 
 and the overall AIC mean and total are somewhat lower for the simple linear model without paired design.
@@ -225,7 +227,7 @@ sum(fit_kimma$lm.fit$AIC)
 sum(fit_kimma$lme.fit$AIC)
 ```
 
-In general, differences in mean AIC < 2 show that either model is appropriate, differences from 2 to 7 are moderate evidence for the lower value model, and differences greater than 7 are strong evidence for the lower value model.
+In general, differences in mean AIC < 2 show that either model is appropriate, differences from 2 to 7 are moderate evidence for the lower AIC model, and differences greater than 7 are strong evidence for the lower AIC model.
 
 So in this case, which model do we go with? AIC slightly supports the simple model but our study design is paired... Always use your scientific reasoning first! If you know that there is a study design feature or confounding covariate, keep them in the model even if the AIC says otherwise. Be smarter than your data!
 
