@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kim Dill-McFarland">
-<meta name="dcterms.date" content="2023-11-21">
+<meta name="dcterms.date" content="2023-11-22">
 
 <title>Setup and installation</title>
 <style>
@@ -71,12 +71,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="1.setup_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-introduction" id="toc-data-introduction" class="nav-link active" data-scroll-target="#data-introduction">Data introduction</a></li>
+  <li><a href="#download-and-install" id="toc-download-and-install" class="nav-link" data-scroll-target="#download-and-install">Download and install</a>
+  <ul class="collapse">
+  <li><a href="#at-the-hackday" id="toc-at-the-hackday" class="nav-link" data-scroll-target="#at-the-hackday">At the Hackday</a></li>
+  <li><a href="#on-your-own" id="toc-on-your-own" class="nav-link" data-scroll-target="#on-your-own">On your own</a>
+  <ul class="collapse">
+  <li><a href="#download-the-data" id="toc-download-the-data" class="nav-link" data-scroll-target="#download-the-data">Download the data</a></li>
+  <li><a href="#install-r-and-rstudio" id="toc-install-r-and-rstudio" class="nav-link" data-scroll-target="#install-r-and-rstudio">Install R and RStudio</a></li>
+  </ul></li>
+  <li><a href="#install-r-packages" id="toc-install-r-packages" class="nav-link" data-scroll-target="#install-r-packages">Install R packages</a></li>
+  <li><a href="#optional-install-data-cleaning-r-packages" id="toc-optional-install-data-cleaning-r-packages" class="nav-link" data-scroll-target="#optional-install-data-cleaning-r-packages">Optional install data cleaning R packages</a>
+  <ul class="collapse">
+  <li><a href="#check-r-package-install" id="toc-check-r-package-install" class="nav-link" data-scroll-target="#check-r-package-install">Check R package install</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#navigation" id="toc-navigation" class="nav-link" data-scroll-target="#navigation"><em>Navigation</em></a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -98,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 21, 2023</p>
+      <p class="date">November 22, 2023</p>
     </div>
   </div>
   
@@ -114,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>Darrah PA <em>et al</em>. Airway T-cells are a correlate of i.v. Bacille Calmette-Guerin-mediated protection against tuberculosis in rhesus macaques. Cell Host Microbe. 2023 Jun 14;31(6):962-977.e8. doi: <a href="https://doi.org/10.1016/j.chom.2023.05.006">10.1016/j.chom.2023.05.006</a>. PMID: 37267955; PMCID: PMC10355173.</p>
 </blockquote>
-<p>These data are single-cell RNAseq from <em>Rhesus macaques</em> (N=15) with and without BCG vaccination as well as before and after <em>M. tuberculosis</em> (Mtb) challenge. Vaccinations include aerosol (AE), intradermal high-dose (IDhigh), intradermal low-dose (IDlow), intravenous (IV), and naïve-controls. Bronchoalveolar lavage (BAL) was collected at weeks 13 and 25 prior to Mtb challenge at week 26.</p>
+<p>These data are single-cell RNAseq from <em>Rhesus macaques</em> with and without BCG vaccination as well as before and after <em>M. tuberculosis</em> (Mtb) challenge. Vaccinations include aerosol (AE), intradermal high-dose (IDhigh), intradermal low-dose (IDlow), intravenous (IV), and naïve-controls. Bronchoalveolar lavage (BAL) was collected at weeks 13 and 25.</p>
 <p>You can explore the data at <a href="https://singlecell.broadinstitute.org/single_cell/study/SCP796/prevention-of-mycobacterium-tuberculosis-infection-and-disease-in-nonhuman-primates-following-intravenous-bcg-vaccination?scpbr=the-alexandria-project" class="uri">https://singlecell.broadinstitute.org/single_cell/study/SCP796/prevention-of-mycobacterium-tuberculosis-infection-and-disease-in-nonhuman-primates-following-intravenous-bcg-vaccination?scpbr=the-alexandria-project</a></p>
 </section>
 <section id="download-and-install" class="level1">
