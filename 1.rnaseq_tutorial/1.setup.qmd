@@ -2,10 +2,12 @@
 title: "Setup and installation"
 author: "Kim Dill-McFarland"
 date: "version `r format(Sys.time(), '%B %d, %Y')`"
-html:
+format:
+  html:
     toc: true
-    toc-expand: 2
+    toc-location: left
     html-math-method: katex
+    css: styles.css
 editor: source
 editor_options:
   chunk_output_type: console
@@ -17,7 +19,7 @@ We will be working with one of the Hackday data sets.
 
 > Darrah PA *et al*. Airway T-cells are a correlate of i.v. Bacille Calmette-Guerin-mediated protection against tuberculosis in rhesus macaques. Cell Host Microbe. 2023 Jun 14;31(6):962-977.e8. doi: [10.1016/j.chom.2023.05.006](https://doi.org/10.1016/j.chom.2023.05.006). PMID: 37267955; PMCID: PMC10355173.
 
-These data are single-cell RNAseq from *Rhesus macaques* (N=15) with and without BCG vaccination as well as before and after *M. tuberculosis* (Mtb) challenge. Vaccinations include aerosol (AE), intradermal high-dose (IDhigh), intradermal low-dose (IDlow), intravenous (IV), and naïve-controls. Bronchoalveolar lavage (BAL) was collected at weeks 13 and 25 prior to Mtb challenge at week 26.
+These data are single-cell RNAseq from *Rhesus macaques* with and without BCG vaccination as well as before and after *M. tuberculosis* (Mtb) challenge. Vaccinations include aerosol (AE), intradermal high-dose (IDhigh), intradermal low-dose (IDlow), intravenous (IV), and naïve-controls. Bronchoalveolar lavage (BAL) was collected at weeks 13 and 25.
 
 You can explore the data at <https://singlecell.broadinstitute.org/single_cell/study/SCP796/prevention-of-mycobacterium-tuberculosis-infection-and-disease-in-nonhuman-primates-following-intravenous-bcg-vaccination?scpbr=the-alexandria-project> 
 

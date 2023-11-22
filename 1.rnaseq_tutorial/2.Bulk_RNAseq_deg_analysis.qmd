@@ -2,10 +2,12 @@
 title: "Bulk RNAseq differential expression analysis"
 author: "Kim Dill-McFarland"
 date: "version `r format(Sys.time(), '%B %d, %Y')`"
-html:
+format:
+  html:
     toc: true
-    toc-expand: 2
+    toc-location: left
     html-math-method: katex
+    css: styles.css
 editor: source
 editor_options:
   chunk_output_type: console

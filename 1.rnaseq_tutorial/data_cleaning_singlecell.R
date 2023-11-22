@@ -45,14 +45,15 @@ dat[["orig.clusters"]] <- clusters
 dat <- RunUMAP(dat, dims = 1:10)
 dat <- RunTSNE(dat, dims = 1:10)
 
-# Down-sample to 0.5% of cells per cell type
+# Down-sample to 0.5% or 10 cells per cell type
 cells_keep <- c()
 for(cell in unique(clust$cell_type__ontology_label)){
   temp <- clust %>% 
     filter(cell_type__ontology_label==cell)
   
   n <- round(nrow(temp)*0.005)
-
+  if(n<10){ n <- 10 }
+  
   set.seed(42)
   temp2 <- sample(temp$NAME, n)
   cells_keep <- c(cells_keep, temp2)
@@ -66,7 +67,7 @@ p1 <- DimPlot(dat, reduction = "umap", group.by = "orig.clusters",
               pt.size=0.001, alpha=0.2)
 ggsave(p1, filename="images/UMAP.png", height=5, width=6)
 # Test UMAP
-# DimPlot(dat_sub, reduction = "umap", group.by = "orig.clusters")
+DimPlot(dat_sub, reduction = "umap", group.by = "orig.clusters")
 
 # Save 
 dat_sc <- dat_sub
