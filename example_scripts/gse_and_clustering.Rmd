@@ -2,7 +2,13 @@
 title: "Gene Set Enrichment and Clustering"
 author: "Fergal Duffy"
 date: "2023-11-01"
-output: html_document
+output: 
+  html_document:
+    fig_width: 12
+    fig_height: 12
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -18,42 +24,49 @@ library("DESeq2")
 library("pheatmap")
 library("igraph")
 library("WGCNA")
+library("conflicted")
+conflicts_prefer(dplyr::filter, base::intersect)
 ```
 
 ## Preparing the data
 
-We will use the Darrah at al dataset to look for gene sets and gene clusters associated with
-protection. This experiment comprises 15 rhesus macaques vaccinated with BCG via various strategies
-and and BALs collected at week 13 and 25 post vaccination, prior to Mtb challenge at week 26.
+We will use the Darrah at al dataset to look for gene sets and gene
+clusters associated with protection. This experiment comprises 15 rhesus
+macaques vaccinated with BCG via various strategies and and BALs
+collected at week 13 and 25 post vaccination, prior to Mtb challenge at
+week 26.
 
-The Darrah et al dataset is a single-cell RNAseq dataset, and each cell has been labelled
-with its canonical named cell type. 
+The Darrah et al dataset is a single-cell RNAseq dataset, and each cell
+has been labelled with its canonical named cell type.
 
-To simplify the analysis, cells representing the same cell type
-have been summed into a single 'pseudobulk' count per-gene per-sample. Thus, single-cell RNAseq was
-used to identify and define cell types, and we can apply standard bulk RNAseq tools to interpret gene
-expression within each cell type.
+To simplify the analysis, cells representing the same cell type have
+been summed into a single 'pseudobulk' count per-gene per-sample. Thus,
+single-cell RNAseq was used to identify and define cell types, and we
+can apply standard bulk RNAseq tools to interpret gene expression within
+each cell type.
 
-First, load in the raw count data and associated experiment design metadata, normalize the counts,
-tidy up the metadata, and create a long annotated raw count dataframe.
+First, load in the raw count data and associated experiment design
+metadata, normalize the counts, tidy up the metadata, and create a long
+annotated raw count dataframe.
 
 Key metadata columns
 
-* VaccineRoute 
-    * AE (aerosol BCG) 
-    * IDHigh (Intradermal BCG high dose) 
-    * IDLow (Intradermal BCG low dose) 
-    * IV (intravenous BCG) *
-    * Naive (unvaccinated control)
-* vaccination__time_since: 
-    * N. weeks post vaccine
-* donor_id: 
-    * Unique ID per NHP
-* Stimulated
-    * Samples stimulated with PPD: Yes or No
+-   VaccineRoute
+    -   AE (aerosol BCG)
+    -   IDHigh (Intradermal BCG high dose)
+    -   IDLow (Intradermal BCG low dose)
+    -   IV (intravenous BCG) \*
+    -   Naive (unvaccinated control)
+-   vaccination\_\_time_since:
+    -   N. weeks post vaccine
+-   donor_id:
+    -   Unique ID per NHP
+-   Stimulated
+    -   Samples stimulated with PPD: Yes or No
 
-The DESeq2 `vst()` function will normalize the count data to account for sequencing depth,
-and the mean-variance relationship, and returns a log-scaled matrix of normalized counts
+The DESeq2 `vst()` function will normalize the count data to account for
+sequencing depth, and the mean-variance relationship, and returns a
+log-scaled matrix of normalized counts
 
 ```{r}
 
@@ -67,16 +80,16 @@ metaCols <- c('organ__ontology_label', 'vaccination', 'vaccination__ontology_lab
               'VaccineRouteUniqueGroup', 'vaccination_route', 'vaccination__time_since',
               'vaccination__time_since__unit','vaccination__dosage')
 
-metaData <- set_names(read_tsv(metaFilename, skip=2), 
-                 as.character(read_tsv(metaFilename, n_max=1, col_names=F)[1,])) %>%
+metaData <- set_names(read.table(metaFilename, sep="\t", header=F, skip=2), 
+                 as.character(read.table(metaFilename,sep="\t",  nrows=1, header=F))) %>%
   select(one_of(metaCols)) %>%
   mutate(countColID=sprintf("D%s_WK%d_STIM%s_%s", donor_id, 
-                            vaccination__time_since, Stimulated, cell_type__ontology_label)) %>%
+                            vaccination__time_since, Stimulated, make.names(cell_type__ontology_label))) %>%
   distinct()
 
 
 
-rawCounts <-  read_csv(dataFilename) %>% 
+rawCounts <-  read.csv(dataFilename) %>% 
   rename_with(.fn=\(.)"gene", .cols=1) %>%
   column_to_rownames("gene") %>%
   as.matrix()
@@ -94,8 +107,8 @@ longCounts <- rawCounts %>%
 
 ## Differential expression
 
-We can use the standard DESeq2 pipeline to identify gene that are highly expressed in specific cell types
-and differ between conditions
+We can use the standard DESeq2 pipeline to identify gene that are highly
+expressed in specific cell types and differ between conditions
 
 ```{r}
 
@@ -110,9 +123,11 @@ studyDesignFormula <- ~0+VaccineRoute+Stimulated+vaccination__time_since
 darrahCellTypeDatasets <- unique(metaData$cell_type__ontology_label) %>%
   set_names() %>%
   map(\(cellType){
+    message(cellType)
     cellTypeMetadata <- filter(metaData, cell_type__ontology_label==cellType) %>%
-      mutate(status=sprintf("%s_%dwks_Stim%s", VaccineRoute, vaccination__time_since, Stimulated))
-    
+      mutate(status=sprintf("%s_%dwks_Stim%s", VaccineRoute, vaccination__time_since, Stimulated),
+             countColID=make.names(countColID)) 
+    message(cellTypeMetadata$countColID)
     DESeqDataSetFromMatrix(countData=rawCounts[annotatedGenes,cellTypeMetadata$countColID],
                            colData=cellTypeMetadata,
                            design=~0+status)
@@ -133,15 +148,17 @@ tCellResponseGenes <-  results(darrahCelltypeModels$`T cell`,
 ```
 
 ## Exploring Heatmaps and hierarchical clustering
-Lets visualize  T cell response genes identified above, and how they respond in other
-cell types at other timepoints.
 
-We use pheatmap to plot average gene expression per group, and hierarchically
-cluster the genes and conditions, indicated with the dendrogram.
+Lets visualize T cell response genes identified above, and how they
+respond in other cell types at other timepoints.
+
+We use pheatmap to plot average gene expression per group, and
+hierarchically cluster the genes and conditions, indicated with the
+dendrogram.
 
 We can also generate clusters manually using the `hclust` function
 
-```{r} 
+```{r}
 
 #Differentially expressed genes between IV and naive in stimulated T cells at 13 weeks
 sigTcellResponseGenes <- tCellResponseGenes %>%
@@ -181,11 +198,21 @@ pheatmap(plotData,
 
 
 ```
+
 ## Gene set enrichment analysis
 
-We can interpret our list of differentially expressed genes by comparing to annotated empirically derived sets of coherently expressed genes. Caveat: these gene sets were derived from human whole-blood gene expression studies, and we are looking at NHP BAL pseudobulk data. However, human and NHP gene responses are similar, and whole blood primarily reflects immune cell responses, similar to BAL, so they should provide useful information. 
+We can interpret our list of differentially expressed genes by comparing
+to annotated empirically derived sets of coherently expressed genes.
+Caveat: these gene sets were derived from human whole-blood gene
+expression studies, and we are looking at NHP BAL pseudobulk data.
+However, human and NHP gene responses are similar, and whole blood
+primarily reflects immune cell responses, similar to BAL, so they should
+provide useful information.
 
-The `fgsea` packages assesses gene set enrichment using ranked gene statistics (from our DESeq2 results) and lists of pre-defined gene sets. We will use MSigDB Hallmark modules, along with published gene sets from Li et al (LI), and Chaussabel et al (DC).
+The `fgsea` packages assesses gene set enrichment using ranked gene
+statistics (from our DESeq2 results) and lists of pre-defined gene sets.
+We will use MSigDB Hallmark modules, along with published gene sets from
+Li et al (LI), and Chaussabel et al (DC).
 
 ```{r}
 #Format the gene sets
@@ -237,52 +264,74 @@ ggplot(sigGeneSets, aes(y=pathway, x=NES, fill=NES)) +
 
 ## Unsupervised clustering using WGCNA
 
+WGCNA refers to Weighted Gene Co-expression Network Analysis, created by
+Langfelder and Horvath (2018). WGNCA is an unsupervised clustering
+approach to find data-driven correlated gene sets in expression data.
 
+The first step in WGCNA is to create an [n_gene x n_gene] correlation
+matrix, which is transformed into a adjacency matrix using a
+thresholding procedure (hard or soft threshold) applied to the
+correlation matrix.
+
+This is followed by an unsupervised gene module detection step. This is
+based on topological overlap, e.g. 2 gene have high topological overlap
+if they are 'adjacent' to similar sets of genes, based on the adjacency
+matrix. This topological overlap measure is used to crease a
+hierarchical clustering tree. The clustering tree is then 'cut' into
+individual gene modules that are highly topologically similar.
+
+Below, we apply the WGCNA algorithm to the Darrah et al macrophage
+expression data to discover and test macrophage-specific gene modules.
+
+#### Identify WGCNA clusters 
 
 ```{r}
 
-normCountMat <- longCounts %>%
-  filter(gene %in% annotatedGenes) %>%
+macNormCountMat <- longCounts %>%
+  filter(gene %in% annotatedGenes & cell_type__ontology_label=="macrophage") %>%
   select(gene, countColID, normExpr) %>%
   pivot_wider(names_from="gene", values_from="normExpr") %>%
   column_to_rownames("countColID") %>%
   as.matrix()
 
-powers <-  seq(from = 1, to = 20, by = 2)
+powers <-  1:20
 
 softThreshPower <- pickSoftThreshold(
-  normCountMat,   
+  macNormCountMat,   
   powerVector = powers,
-  verbose = 5)
+  verbose = 0)
 
-ggplot(softThreshPower$fitIndices, aes(x=Power, y=-sign(slope) * SFT.R.sq, label=Power)) +
-  geom_text()
-
-ggplot(softThreshPower$fitIndices, aes(x=Power, y=mean.k., label=Power)) +
-  geom_text()
-
-wgncaNetwork <- blockwiseModules(datExpr=normCountMat, 
+conflicts_prefer(WGCNA::cor)
+macWgncaNetwork <- blockwiseModules(datExpr=macNormCountMat, 
                                  power=softThreshPower$powerEstimate,
                                  saveTOMs=T)
 
-wcgnaLabels <- data.frame(colorLabel=wgncaNetwork$colors,
-                          gene=names(wgncaNetwork$colors)) %>%
+macWcgnaLabels <- data.frame(colorLabel=macWgncaNetwork$colors,
+                          gene=names(macWgncaNetwork$colors)) %>%
   split(.$colorLabel) %>%
   map(\(df)df$gene)
 
-wgcnaModuleCounts <- table(wgncaNetwork$colors)
-#One module has the vast majority of genes. Since most genes don't respond
+macWgcnaModuleCounts <- table(macWgncaNetwork$colors)
+#One module has the  majority of genes. Since most genes don't respond
 #presumably it's the module of non-reponsive genes
 
 #How do the wgcna modules compare with coherently expressed modules
 #Lets look at gene level overlaps and test with hypergeometric test
+```
 
-modulePairs <- expand.grid(WGCNA=names(wgcnaModuleCounts),
+#### WGCNA clusters vs published gene sets
+
+We can see how our WGCNA macrophage clusters map to published sets of coherently expressed genes by comparing the WGCNA clusters to published BTM sets.
+
+The heatmap shows signficant overlaps.
+
+```{r}
+modulePairs <- expand.grid(WGCNA=names(macWgcnaModuleCounts),
                            BTMs=names(gsets))
 
 
-wcgnaBtmStats <- map2_dfr(modulePairs$WGCNA, modulePairs$BTMs, \(wgcnaName, btmName){
-  wgcnaGenes <- wcgnaLabels[[wgcnaName]]
+macwWcgnaBtmStats <- map2_dfr(modulePairs$WGCNA, modulePairs$BTMs, \(wgcnaName, btmName){
+  wgcnaGenes <- macWcgnaLabels[[wgcnaName]]
   btmGenes <- gsets[[btmName]]
   sharedGenes <- intersect(wgcnaGenes, btmGenes)
   pOverlap <- if(length(sharedGenes)==0) {
@@ -300,26 +349,40 @@ wcgnaBtmStats <- map2_dfr(modulePairs$WGCNA, modulePairs$BTMs, \(wgcnaName, btmN
 }) %>% mutate(FDR=p.adjust(pOverlap, method="fdr"))
 
 
-wcgnaBtmStats %>%
-  filter(FDR<0.05 & nSharedGenes>=5) %>%
-  ggplot(aes(y=btmName, x=wgcnaName, fill=nSharedGenes)) +
-    geom_tile() +
-    scale_fill_distiller(palette = "YlOrRd", direction=1) +
-    theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0.5))
+sigwWcgnaBtmStatsWide <- macwWcgnaBtmStats %>%
+  filter(FDR<0.05 & nSharedGenes>=10) %>%
+  select(wgcnaName, btmName, nSharedGenes) %>%
+  pivot_wider(names_from="btmName", values_from=nSharedGenes, values_fill = 0) %>%
+  column_to_rownames("wgcnaName")
 
+pheatmap(sigwWcgnaBtmStatsWide, 
+         color = RColorBrewer::brewer.pal(n=7, name="YlOrRd"),
+         clustering_method="ward.D2")
+
+```
+
+#### How do WGCNA clusters relate to experimental status?
+
+Averaging WGCNA module expression by status lets us visualize relationships
+between WGNCA macrophage clusters and mutliple aspects of the experiments immune
+responses
+
+```{r}
 #Now, average WGCNA module by cell type and vaccination status
 
 WGNAmodStats <- longCounts %>%
-  left_join(data.frame(gene=names(wgncaNetwork$colors),
-                       WGCNAmod=wgncaNetwork$colors)) %>%
+  filter(cell_type__ontology_label %in% "macrophage") %>%
+  left_join(data.frame(gene=names(macWgncaNetwork$colors),
+                       WGCNAmod=macWgncaNetwork$colors)) %>%
     filter(!is.na(WGCNAmod)) %>%
   group_by(WGCNAmod) %>%
   summarize(aveModExpr=mean(normExpr, trim=0.25), sdModExpr=sd(normExpr))
   
 
 aveWGNAexprByStatusAndCellType <- longCounts %>%
-  left_join(data.frame(gene=names(wgncaNetwork$colors),
-                       WGCNAmod=wgncaNetwork$colors)) %>%
+    filter(cell_type__ontology_label %in% "macrophage")%>%
+  left_join(data.frame(gene=names(macWgncaNetwork$colors),
+                       WGCNAmod=macWgncaNetwork$colors)) %>%
   filter(!is.na(WGCNAmod)) %>%
   group_by(WGCNAmod, status, cell_type__ontology_label) %>%
   summarize(modExprPerStatusPerCellType=mean(normExpr, trim=0.25)) %>%
@@ -332,7 +395,7 @@ statusAnnots <- longCounts %>%
          timepoint=vaccination__time_since, stim=Stimulated) %>%
   distinct() %>%
   mutate(colName=paste(celltype, status, sep="|"), timepoint=factor(timepoint)) %>%
-  select(-status) %>%
+  select(-status, -celltype) %>%
   column_to_rownames("colName")
 
 aveWGNAexprByStatusAndCellTypeWide <- aveWGNAexprByStatusAndCellType %>%
@@ -357,6 +420,7 @@ annotColors <- list(celltype=c("B cell"="purple",
 
 pheatmap(aveWGNAexprByStatusAndCellTypeWide,
          annotation_col = statusAnnots,
-         show_colnames = F, annotation_colors = annotColors)
+         show_colnames = F, annotation_colors = annotColors,
+         clustering_method = "ward.D2")
 
 ```
