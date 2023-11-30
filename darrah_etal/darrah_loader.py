@@ -33,6 +33,7 @@ def load_raw_data():
     cts13 = pd.read_csv(opj(bigdata_folder, 'darrah_Week13.Filtered.cells.txt'), sep='\t')
     cts25 = pd.read_csv(opj(bigdata_folder, 'darrah_Week25.Filtered.cells.txt'), sep='\t')
     
+    """NOTE: the meta-data and cts data are not aligned by cellID so a MERGE is neccessary on md['NAME'] and cts columns"""
     return md, cts13, cts25
 
 def load_pseudo_bulk():
