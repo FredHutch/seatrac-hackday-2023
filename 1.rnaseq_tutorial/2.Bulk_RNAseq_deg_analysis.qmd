@@ -1,0 +1,268 @@
+---
+title: "Bulk RNAseq differential expression analysis"
+author: "Kim Dill-McFarland"
+date: "version `r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc-location: left
+    html-math-method: katex
+    css: styles.css
+editor: source
+editor_options:
+  chunk_output_type: console
+---
+
+## Overview
+
+One common bulk RNAseq analysis is differential expression, which determines individual genes that significantly change by your variables of interest. Most commonly, you will see linear modelings with the R package `limma` and binomial models with `DeSeq2`. These and other packages are designed to run statistical models across 1000s of genes in an efficient manor. Here, we will explore `limma` as well as `kimma` which expands the RNAseq model framework to mixed effect and covariance models.
+
+## Prior to the tutorial
+
+Please follow the setup instructions at <https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/1.setup.html>.
+
+## Load packages
+
+Load the following packages.
+
+```{r}
+#Data manipulation and plotting
+library(tidyverse)
+#Linear modeling
+library(kimma)
+library(limma)
+
+set.seed(651)
+```
+
+## Data
+### Data description
+
+We will be using data from
+
+> Darrah PA *et al*. Airway T-cells are a correlate of i.v. Bacille Calmette-Guerin-mediated protection against tuberculosis in rhesus macaques. Cell Host Microbe. 2023 Jun 14;31(6):962-977.e8. doi: [10.1016/j.chom.2023.05.006](https://doi.org/10.1016/j.chom.2023.05.006). PMID: 37267955; PMCID: PMC10355173.
+
+Specifically, we will be focusing on the T-cell transcriptional responses to *M. tuberculosis* (Mtb) challenge at week 25. For simplicity, we will ignore the vaccination groups, and you may explore them during your Hack time. These data are pseudo-bulk counts from the larger single-cell data set, which we will be exploring during the second part of this tutorial.
+
+The raw counts data were cleaned and normalized following a standard pipeline. You can learn more at <https://bigslu.github.io/tutorials/RNAseq/2.RNAseq_counts.to.voom.html>. The code for cleaning of these data specifically is available at <https://github.com/FredHutch/seatrac-hackday-2023/blob/main/1.rnaseq_tutorial/data_cleaning_bulk.R>
+
+### Load data
+
+All counts, gene, and sample metadata are contained in a single object from the `limma` package.
+
+```{r}
+load("data/dat_tcell.RData")
+names(dat_tcell)
+```
+
+We access each data frame within this `Elist` using `$`. The normalized log2 CPM expression data are contained in `E`.
+
+```{r}
+dat_tcell$E[1:3,1:2]
+```
+
+Library and donor metadata are in `targets`.
+
+```{r}
+dat_tcell$targets[1:3,]
+```
+
+Gene metadata are in `genes`.
+
+```{r}
+dat_tcell$genes[1:3,1:3]
+```
+
+Voom gene-level quality weights are in `weights`. These were calculated with `voomWithQualityWeights( )`.
+
+```{r}
+example.voom$weights[1:3,1:3]
+```
+
+And finally, the null model used in voom normalization is found in `design`.
+
+```{r}
+example.voom$design[1:3,]
+```
+
+## Introduction to linear modeling
+
+This tutorial assumes some familiarity with R and statistical modeling. You can find a quick intro relevant to RNA-seq data in [Intro to linear modeling][lm_intro].
+
+## Modeling in `limma`
+### Simple linear regression in `limma`
+
+`limma` take model inputs as a model matrix. This matrix encodes all the variables from the formula as 0 for N and 1 for Y. For example, here is the model matrix for the formula `~ mtb`
+
+```{r}
+mm_limma <- model.matrix(~ mtb, data=dat_tcell$targets)
+
+head(mm_limma)
+```
+
+> Be careful with variable order! Note that we only see one level for each variable: Mtb for the mtb variable. This shows that the Mtb samples are being compared to the reference level (which is `mtb == "Media"`). The reference is determined alphabetically if the variable is a character and by level if the variable is a factor. So, if you want a different order than alphabetical, you need to format your variables as factors and set the appropriate order.
+
+Once we have a model matrix, we fit the model and estimate P-values.
+
+```{r}
+#Fit model
+fit_limma <- lmFit(object = dat_tcell$E, 
+                   design = mm_limma,
+                   weights = dat_tcell$weights)
+#Estimate significance
+efit_limma <- eBayes(fit = fit_limma)
+```
+
+These outputs contain a lot of information. We can pull out the most commonly used pieces with `topTable`. By default, this gives you the 10 most significant genes across the entire model.
+
+```{r}
+#Extract results
+fdr_limma <- topTable(fit = efit_limma)
+head(fdr_limma)
+```
+
+With some additional parameters, we can get gene results for individual variables. This is the same for this simple model but would differ if you had multiple variables of interest, covariates, interaction term, etc.
+
+```{r}
+fdr_limma_mtb <- topTable(fit = efit_limma, 
+                      coef = "mtbMtb", number = Inf)
+
+head(fdr_limma_mtb)
+```
+
+The variables included are:
+
+* `logFC`: log fold change. The sign is relative to your reference. For example, negative logFC for mtbMtb means Mtb minus Media is negative and thus, expression is lower in Mtb-infected samples.
+* `AveExpr`: average expression across all samples
+* `t`: test statistic for significance
+* `P.Value`
+* `adj.P.Val`: FDR adjusted P-value
+* `B`: beta coefficient
+
+With some `tidyverse` manipulation, we can get results for all genes and variables in one table. Or you can use the `kimma` function `extract_lmFit` and skip the coding! This also renames the columns to match `kimma`'s output for easier model comparison later on.
+
+```{r}
+fdr_limma <- extract_lmFit(design = mm_limma, fit = efit_limma)
+
+names(fdr_limma)
+head(fdr_limma$lm)
+```
+
+### Paired sample design in `limma`
+
+`limma` uses a shortcut to model paired sample designs. Unlike a true mixed effect model, `limma` estimates the mean correlation of gene expression between pairs. This is an approximation of a mixed effects model. While it runs very fast, it assumes the paired design impacts all genes equally
+
+Using the same model as before, we can calculate the mean correlation.
+
+```{r}
+consensus.corr <- duplicateCorrelation(object = dat_tcell$E, 
+                                       design = mm_limma,
+                                       block = dat_tcell$targets$ptID)
+consensus.corr$consensus.correlation
+```
+
+You can then incorporate this estimate into the `limma` model. We will not do not here, because we now have full mixed effects models in `kimma`.
+
+## Modeling in `kimma`
+
+`kimma` supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and covariance matrices. Let's run the same models as we did with `limma`.
+
+Note that `kimma` is slower than `limma`. It can be run on multiple processors to increase speed.
+
+```{r}
+fit_kimma <- kmFit(dat = dat_tcell, 
+                   model = "~ mtb + (1|ptID)", 
+                   use_weights = TRUE,
+                   run_lm = TRUE, run_lme = TRUE,
+                   metrics = TRUE)
+```
+
+The `kimma` output contains 4 data frames: one for each model's results (like `limma`'s `topTable`) and one for each model's fit metrics, which unlike `limma`, contains several fit metrics.
+
+```{r}
+names(fit_kimma)
+head(fit_kimma$lm)
+head(fit_kimma$lm.fit)
+```
+
+## Picking a best fit model
+
+We can now look at metrics like AIC where we see that best fit varies by gene (which is very common)...
+
+```{r}
+fit_kimma_all <- full_join(fit_kimma$lm.fit, 
+                           fit_kimma$lme.fit, 
+                           by = c("gene"), 
+                           suffix = c("_lm","_lme")) %>% 
+  #create color variable
+  mutate(diff = AIC_lme-AIC_lm,
+         diff_col = case_when(diff<=-7 | diff>=7 ~ "Strong",
+                              diff<=-2 | diff>=2 ~ "Moderate",
+                              TRUE~"No difference"),
+         diff_col = factor(diff_col, 
+                           levels=c("No difference",
+                                    "Moderate","Strong")))
+
+fit_kimma_all %>%
+  ggplot(aes(x = AIC_lm, y = AIC_lme)) +
+  geom_point(alpha = 0.2, aes(color=diff_col)) +
+  geom_abline(intercept = 0, slope = 1) +
+  theme_classic() +
+  coord_fixed() +
+  labs(title = "AIC", color="AIC difference") +
+  scale_color_manual(values=c("grey40","orange","darkred")) +
+  annotate("text", x=150, y=0, label="Better fit by lme")+
+  annotate("text", x=0, y=150, label="Better fit by lm")
+```
+
+and the overall AIC mean and total are somewhat lower for the simple linear model without paired design.
+
+```{r}
+#Mean
+mean(fit_kimma$lm.fit$AIC)
+mean(fit_kimma$lme.fit$AIC)
+
+#Sum
+sum(fit_kimma$lm.fit$AIC)
+sum(fit_kimma$lme.fit$AIC)
+```
+
+In general, differences in mean AIC < 2 show that either model is appropriate, differences from 2 to 7 are moderate evidence for the lower AIC model, and differences greater than 7 are strong evidence for the lower AIC model.
+
+So in this case, which model do we go with? AIC slightly supports the simple model but our study design is paired... Always use your scientific reasoning first! If you know that there is a study design feature or confounding covariate, keep them in the model even if the AIC says otherwise. Be smarter than your data!
+
+For this experiment, we know we have a paired design so either `limma` with `duplicateCorrelation` or `kimma` with `run.lme` is appropriate. In our experience, a true mixed effects model in `kimma` yields fewer false positive genes when you have a paired design, even if metrics like AIC do not support it as the best fit model.
+
+## Significant genes
+
+Here, we summarize how many genes are significant at different FDR cutoffs. We see a strong Mtb effect.
+
+```{r}
+summarise_kmFit(fit_kimma$lme)
+```
+
+Because there are so many significant genes, it can be difficult to interpret results. You'll see further methods this afternoon!
+
+# *Navigation*
+
+* Previous lesson: [Setup instructions][lesson1]
+* Next lesson: [Single cell RNAseq][lesson3]
+* [Hackday GitHub][index]
+
+# *Additional resources*
+
+* [More workshops][ws]
+* [More tutorials][tut]
+* [limma manual, Chapter 15](http://bioconductor.org/packages/devel/bioc/vignettes/limma/inst/doc/usersguide.pdf)
+* [kimma vignette](https://bigslu.github.io/kimma_vignette/)
+
+***
+[index]: https://github.com/FredHutch/seatrac-hackday-2023
+[ws]: https://bigslu.github.io/workshops/
+[tut]: https://bigslu.github.io/tutorials/
+
+[lm_intro]: https://bigslu.github.io/workshops/2023.01.30_RNAseq.i4TB/1_linear_models.html
+
+[lesson1]: https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/1.setup.html
+[lesson2]: https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/2.Bulk_RNAseq_deg_analysis.html
+[lesson3]: https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/3.scRNAseq_analysis.html
