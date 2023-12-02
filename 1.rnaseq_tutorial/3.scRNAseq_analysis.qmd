@@ -219,8 +219,6 @@ Now that we have an ordination, what biological questions can it help to answer?
 * More specific cell assignment: You can explore specific marker genes to determine more specific cell annotations like M0 vs M1 macrophages, helper vs cytotoxic T-cells, etc.
 * Differential expression: You can compare expression between cell types or within the same cell type between different groups like Media vs Mtb. This can be done with pseudo bulk data like in the first part of this tutorial or with individual cells which increases statistical power. Again, the later can be visualized in ordinations.
 
-
-
 # *Navigation*
 
 * Previous lesson: [Bulk RNAseq][lesson2]
