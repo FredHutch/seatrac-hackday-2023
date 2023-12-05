@@ -190,7 +190,7 @@ You can then incorporate this estimate into the `limma` model. We will not do no
 
 *Note that `kimma` is slower than `limma`, because it runs a true mixed effects model as well as can run multiple models at once. It can be run on multiple processors to increase speed. *
 
-Here, we stick to 1 processor to not overload the server. If you're running this locally, you can omit the `processors` option and `kimma` will automatically run on all processors minus 2.
+Here, we stick to 4 processor to not overload the server. If you're running this locally, you can omit the `processors` option and `kimma` will automatically run on all processors minus 2.
 
 ```{r eval=FALSE}
 fit_kimma <- kmFit(dat = dat_tcell, 
@@ -198,7 +198,7 @@ fit_kimma <- kmFit(dat = dat_tcell,
                    use_weights = TRUE,
                    run_lm = TRUE, run_lme = TRUE,
                    metrics = TRUE,
-                   processors = 1)
+                   processors = 4)
 ```
 
 ```{r echo=FALSE}

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kim Dill-McFarland">
-<meta name="dcterms.date" content="2023-12-01">
+<meta name="dcterms.date" content="2023-12-04">
 
 <title>Bulk RNAseq differential expression analysis</title>
 <style>
@@ -129,7 +129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 1, 2023</p>
+      <p class="date">December 4, 2023</p>
     </div>
   </div>
   
@@ -395,14 +395,14 @@ LST1    2.556890 6.774452 11.68693 1.580100e-13 3.583929e-10 20.78367</code></pr
 <h2 class="anchored" data-anchor-id="modeling-in-kimma">Modeling in <code>kimma</code></h2>
 <p><code>kimma</code> supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and covariance matrices. Let’s run the same models as we did with <code>limma</code>.</p>
 <p><em>Note that <code>kimma</code> is slower than <code>limma</code>, because it runs a true mixed effects model as well as can run multiple models at once. It can be run on multiple processors to increase speed. </em></p>
-<p>Here, we stick to 1 processor to not overload the server. If you’re running this locally, you can omit the <code>processors</code> option and <code>kimma</code> will automatically run on all processors minus 2.</p>
+<p>Here, we stick to 4 processor to not overload the server. If you’re running this locally, you can omit the <code>processors</code> option and <code>kimma</code> will automatically run on all processors minus 2.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit_kimma <span class="ot">&lt;-</span> <span class="fu">kmFit</span>(<span class="at">dat =</span> dat_tcell, </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">model =</span> <span class="st">"~ mtb + (1|ptID)"</span>, </span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">use_weights =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">run_lm =</span> <span class="cn">TRUE</span>, <span class="at">run_lme =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">metrics =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">processors =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">processors =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
