@@ -28,6 +28,8 @@ You can explore the data at <https://singlecell.broadinstitute.org/single_cell/s
 
 An RStudio server with the necessary data and R packages has been setup for the event. Sign-in instructions will be given at the event.
 
+You can find a copy of all the tutorial data and scripts at `/home/seatrac-hackday-2023/`. In R, you can view these files with `list.files("/home/seatrac-hackday-2023")`
+
 ## On your own
 ### Download the data
 
@@ -55,6 +57,7 @@ Install R packages by running a script in your R console in RStudio (left panel 
 #CRAN packages
 install.packages("tidyverse", Ncpus=4)
 install.packages("Seurat", Ncpus=4)
+install.packages(c("usethis","statmod"))
 #Bioconductor packages
 install.packages("BiocManager")
 BiocManager::install("limma")

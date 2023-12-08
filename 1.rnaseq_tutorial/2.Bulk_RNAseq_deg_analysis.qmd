@@ -21,6 +21,13 @@ One common bulk RNAseq analysis is differential expression, which determines ind
 
 Please follow the setup instructions at <https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/1.setup.html>.
 
+## R project
+First, create an R project for this tutorial. When prompted, don't save your current `.RData`.
+
+```{r eval=FALSE}
+usethis::create_project(path = "1.rnaseq_tutorial", rstudio = TRUE)
+```
+
 ## Load packages
 
 Load the following packages.
@@ -45,6 +52,20 @@ We will be using data from
 Specifically, we will be focusing on the T-cell transcriptional responses to *M. tuberculosis* (Mtb) challenge at week 25. For simplicity, we will ignore the vaccination groups, and you may explore them during your Hack time. These data are pseudo-bulk counts from the larger single-cell data set, which we will be exploring during the second part of this tutorial.
 
 The raw counts data were cleaned and normalized following a standard pipeline. You can learn more at <https://bigslu.github.io/tutorials/RNAseq/2.RNAseq_counts.to.voom.html>. The code for cleaning of these data specifically is available at <https://github.com/FredHutch/seatrac-hackday-2023/blob/main/1.rnaseq_tutorial/data_cleaning_bulk.R>
+
+### Copy data
+
+A copy of the entire tutorial is on the Hack Day server at `/home/seatrac-hackday-2023`. 
+
+Copy the tutorial data to a new `data/` directory in your R project.
+
+```{r eval=FALSE}
+dir.create("data")
+
+list.of.files <- list.files("/home/seatrac-hackday-2023/1.rnaseq_tutorial/data/",
+                            full.names = TRUE)
+file.copy(list.of.files, "data")
+```
 
 ### Load data
 
@@ -167,9 +188,21 @@ You can then incorporate this estimate into the `limma` model. We will not do no
 
 `kimma` supports more flexible modeling of RNA-seq data including simple linear and linear mixed effects models with co-variates, weights, random effects, and covariance matrices. Let's run the same models as we did with `limma`.
 
-Note that `kimma` is slower than `limma`. It can be run on multiple processors to increase speed.
+*Note that `kimma` is slower than `limma`, because it runs a true mixed effects model as well as can run multiple models at once. It can be run on multiple processors to increase speed. *
 
-```{r}
+Here, we stick to 4 processor to not overload the server. If you're running this locally, you can omit the `processors` option and `kimma` will automatically run on all processors minus 2.
+
+```{r eval=FALSE}
+fit_kimma <- kmFit(dat = dat_tcell, 
+                   model = "~ mtb + (1|ptID)", 
+                   use_weights = TRUE,
+                   run_lm = TRUE, run_lme = TRUE,
+                   metrics = TRUE,
+                   processors = 4)
+```
+
+```{r echo=FALSE}
+#version to run quickly
 fit_kimma <- kmFit(dat = dat_tcell, 
                    model = "~ mtb + (1|ptID)", 
                    use_weights = TRUE,
