@@ -59,7 +59,7 @@ service rstudio-server restart
 
 ## Additional configuration notes for the AWS EC2 instance
 Use a launch template for quickly launching a new instance. The template `RStudio-Server` currently has the following details.
- - Instance types: `c5.12xlarge` has 49 vCPUs, 96 GiB of RAM and costs $2.04/hr (Dec-2023)
+ - Instance types: `c5.12xlarge` has 48 vCPUs, 96 GiB of RAM and costs $2.04/hr (Dec-2023)
  - AMI: AWS Linux 2023
  - Security group: `launch-wizard-1` currently has several inbound ports open for RStudio or jupyter notebooks including 8989 for RStudio default
  - SSH keys: Use existing key-pair and make sure PEM file is added to the ssh-user before trying to SSH

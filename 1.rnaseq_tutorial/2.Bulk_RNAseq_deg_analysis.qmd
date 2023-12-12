@@ -208,6 +208,7 @@ fit_kimma <- kmFit(dat = dat_tcell,
                    use_weights = TRUE,
                    run_lm = TRUE, run_lme = TRUE,
                    metrics = TRUE)
+save(fit_kimma, file="data/fit_kimma.RData")
 ```
 
 The `kimma` output contains 4 data frames: one for each model's results (like `limma`'s `topTable`) and one for each model's fit metrics, which unlike `limma`, contains several fit metrics.
