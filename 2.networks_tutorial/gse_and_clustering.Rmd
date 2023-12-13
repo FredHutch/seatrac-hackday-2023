@@ -1,7 +1,7 @@
 ---
-title: "Gene Set Enrichment and Clustering"
-author: "Fergal Duffy"
-date: "2023-11-01"
+title: "Gene Set Enrichment and Network Clustering"
+author: "Fergal Duffy and Shuyi Ma"
+date: "2023-11-13"
 output: 
   html_document:
     fig_width: 12
@@ -10,6 +10,8 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+
+The slides introducing the concepts of Gene Set Enrichment and Network Clustering Analysis can be found [here](https://github.com/FredHutch/seatrac-hackday-2023/blob/main/2.networks_tutorial/NetworkAnalysis.pdf).
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
