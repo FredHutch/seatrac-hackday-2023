@@ -23,6 +23,7 @@ Registration:
 
 1. [Bulk RNAseq differential expression](https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/2.Bulk_RNAseq_deg_analysis.html)
 2. [scRNAseq ordinations](https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/3.scRNAseq_analysis.html)
+3. [Network Analysis](https://fredhutch.github.io/seatrac-hackday-2023/2.networks_tutorial/gse_and_clustering.html)
 
 # DATASETS 
 
