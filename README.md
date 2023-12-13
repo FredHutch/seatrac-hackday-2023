@@ -19,10 +19,17 @@ Breakfast included starting at 8:30am, lunch included at noon, happy hour snacks
 Registration: 
 [Online registration using Zoom](https://washington.zoom.us/meeting/register/tJ0sf-GtrjMtHtAekQf7Ew-m4_oYOvm78vVB)
 
+# CODE OF CONDUCT
+
+SEATRAC is dedicated to providing a harassment-free learning experience for everyone regardless of gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age or religion. We do not tolerate harassment of participants in any form. Please reference this code of conduct adopted by Ocean Hackweek that we will use for our TB Hackday.
+
+## Ocean Hackweek [Code of Conduct](https://oceanhackweek.org/about/code-of-conduct.html)
+
 # TUTORIALS
 
 1. [Bulk RNAseq differential expression](https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/2.Bulk_RNAseq_deg_analysis.html)
 2. [scRNAseq ordinations](https://fredhutch.github.io/seatrac-hackday-2023/1.rnaseq_tutorial/3.scRNAseq_analysis.html)
+3. [Network Analysis](https://fredhutch.github.io/seatrac-hackday-2023/2.networks_tutorial/gse_and_clustering_1.html)
 
 # DATASETS 
 

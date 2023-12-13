@@ -83,6 +83,11 @@ docker pull afioregartland/hackday-rstudio
  - `docker run -d -p 8787:8787 -e PASSWORD=dude97 --name hackday_rstudio afioregartland/hackday-rstudio:latest`
  - `docker exec -it hackday_rstudio /bin/bash`
  - `docker push afioregartland/hackday-rstudio:latest`
+ - To add users or change passwords in the docker container use these:
+```
+useradd -m [username]
+echo [username]:[username] | chpasswd
+```
 
 ## Unit test for `lme4` installation
 
